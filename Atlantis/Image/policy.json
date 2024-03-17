@@ -1,0 +1,20 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "iam:*",
+        "rds:*",
+        "eks:*",
+        "ssm:*",
+        "secretsmanager:*",
+        "vpc:*",
+        "s3:*",
+        "ecs:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}

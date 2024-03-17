@@ -1,0 +1,135 @@
+AWSTemplateFormatVersion: '2010-09-09'
+
+Parameters:
+  SecurityGroup:
+    Type: AWS::EC2::SecurityGroup::Id
+    Description: Security Group for the ECS task
+  PrivateSubnetA:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet ID for the ECS task placement
+  PrivateSubnetB:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet ID for the ECS task placement
+  PrivateSubnetC:
+    Type: AWS::EC2::Subnet::Id
+    Description: Subnet ID for the ECS task placement
+  AtlantisServerTargetGroupArn:
+    Type: String
+    Description: The Arn of the internal load balancer target group
+  AtlantisServerLoadBalancerDNSName:
+    Type: String
+    Description: The DNSName of the internal load balancer
+  LogGroupName:
+    Type: String
+    Default: "atlantis-logs"
+  Env:
+    Type: String
+    AllowedValues:
+      - dev
+
+Resources:
+  AtlantisCluster:
+    Type: 'AWS::ECS::Cluster'
+    Properties:
+      ClusterName: AtlantisCluster
+
+  AtlantisTaskExecutionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: ECSExecutionPolicy
+          PolicyDocument:
+            Version: 2012-10-17
+            Statement:
+              - Effect: Allow
+                Action:
+                  - ecr:GetAuthorizationToken
+                  - ecr:BatchCheckLayerAvailability
+                  - ecr:GetDownloadUrlForLayer
+                  - ecr:BatchGetImage
+                  - logs:CreateLogStream
+                  - logs:PutLogEvents
+                  - ssm:GetParameter
+                  - ssm:GetParameters
+                  - kms:Decrypt
+                Resource: '*'
+
+  AtlantisTaskDefinition:
+    Type: 'AWS::ECS::TaskDefinition'
+    Properties:
+      Family: atlantis
+      TaskRoleArn: !GetAtt AtlantisTaskExecutionRole.Arn
+      ExecutionRoleArn: !GetAtt AtlantisTaskExecutionRole.Arn
+      Cpu: 512
+      Memory: 1024
+      NetworkMode: awsvpc
+      RequiresCompatibilities:
+        - FARGATE
+      RuntimePlatform:
+        CpuArchitecture: ARM64
+        OperatingSystemFamily: LINUX
+      ContainerDefinitions:
+        - Name: atlantis-server
+          Image: 851725424717.dkr.ecr.us-east-1.amazonaws.com/atlantis-server:1.0.2
+          PortMappings:
+            - ContainerPort: 4141
+          Environment:
+            - Name: ATLANTIS_WRITE_GIT_CREDS
+              Value: "true"
+            - Name: REPO_ALLOWLIST
+              Value: 'github.com/jvitoroliv/cyberspeed'
+          Secrets:
+            - Name: GH_USER
+              ValueFrom: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/projects/cyberspeed/github/user'
+            - Name: GH_TOKEN
+              ValueFrom: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/projects/cyberspeed/github/atlantis/token'
+            - Name: GH_WEBHOOK_SECRET
+              ValueFrom: !Sub 'arn:aws:ssm:${AWS::Region}:${AWS::AccountId}:parameter/projects/cyberspeed/github/atlantis/webhook/secret'
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-group: !Ref LogGroupName
+              awslogs-region: !Ref AWS::Region
+              awslogs-stream-prefix: ecs
+              awslogs-create-group: "true"
+
+  LogGroup:
+    Type: 'AWS::Logs::LogGroup'
+    Properties:
+      LogGroupName: !Ref LogGroupName
+      RetentionInDays: 3
+
+  AtlantisService:
+    Type: 'AWS::ECS::Service'
+    DependsOn: AtlantisCluster
+    Properties:
+      Cluster: !Ref AtlantisCluster
+      LaunchType: FARGATE
+      TaskDefinition: !Ref AtlantisTaskDefinition
+      DesiredCount: 1
+      LoadBalancers:
+        - TargetGroupArn: !Ref AtlantisServerTargetGroupArn
+          ContainerName: atlantis-server
+          ContainerPort: 4141
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - !Ref PrivateSubnetA
+            - !Ref PrivateSubnetB
+            - !Ref PrivateSubnetC
+          SecurityGroups:
+            - !Ref SecurityGroup
+          AssignPublicIp: DISABLED
+
+Outputs:
+  AtlantisServiceUrl:
+    Description: URL of the Atlantis service
+    Value: !Ref AtlantisServerLoadBalancerDNSName
