@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mockserver-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mockserver
+  template:
+    metadata:
+      labels:
+        app: mockserver
+    spec:
+      containers:
+      - name: mockserver
+        image: 069931004485.dkr.ecr.eu-west-1.amazonaws.com/mockserver:1.0.2
+        ports:
+        - containerPort: 3000
