@@ -31,11 +31,11 @@ module "atlantis" {
       },
       {
         name      = "ATLANTIS_GH_TOKEN"
-        valueFrom = "arn:aws:secretsmanager:us-east-1:851725424717:secret:github/atlantis/token-FrftUs"
+        valueFrom = "arn:aws:ssm:us-east-1:851725424717:parameter/projects/cyberspeed/github/atlantis/token"
       },
       {
         name      = "ATLANTIS_GH_WEBHOOK_SECRET"
-        valueFrom = "arn:aws:secretsmanager:us-east-1:851725424717:secret:github/atlantis/webhook/secret-PkTBZc"
+        valueFrom = "arn:aws:ssm:us-east-1:851725424717:parameter/projects/cyberspeed/github/atlantis/webhook/secret"
       },
     ]
   }
@@ -44,8 +44,8 @@ module "atlantis" {
   service = {
     task_exec_secret_arns = [
       "arn:aws:ssm:us-east-1:851725424717:parameter/projects/cyberspeed/github/atlantis/server/password",
-      "arn:aws:secretsmanager:us-east-1:851725424717:secret:github/atlantis/token-FrftUs",
-      "arn:aws:secretsmanager:us-east-1:851725424717:secret:github/atlantis/webhook/secret-PkTBZc",
+      "arn:aws:ssm:us-east-1:851725424717:parameter/projects/cyberspeed/github/atlantis/token",
+      "arn:aws:ssm:us-east-1:851725424717:parameter/projects/cyberspeed/github/atlantis/webhook/secret",
     ]
     # Provide Atlantis permission necessary to create/destroy resources
     tasks_iam_role_policies = {
