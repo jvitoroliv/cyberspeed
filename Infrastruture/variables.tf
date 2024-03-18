@@ -1,3 +1,13 @@
+locals {
+  aws_auth_role       = "arn:aws:iam::851725424717:role/EKSAdministratorAccess"
+  aws_auth_username   = "EKSAdminUsers"
+  aws_account_id      = data.aws_caller_identity.current.account_id
+  user_arn  = "arn:aws:iam::851725424717:user/cyberspeed"
+  user_name = "cyberspeed-user"
+}
+
+data "aws_caller_identity" "current" {}
+
 ###### Shared vars ######
 variable "aws_region" {
   default = "us-east-1"
@@ -48,8 +58,6 @@ variable "scaling_config_desired_size" {
 variable "namespace" {
   default = "applications"
 }
-
-data "aws_caller_identity" "current" {}
 
 # #Deployment vars
 # variable "deploy_name" {}
