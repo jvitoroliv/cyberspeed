@@ -18,16 +18,19 @@ variable "subnet_ids" {
 variable "node_group_desired_capacity" {
   description = "The desired capacity of the node group"
   type        = number
+  default = 3
 }
 
 variable "node_group_max_capacity" {
   description = "The maximum capacity of the node group"
   type        = number
+  default = 5
 }
 
 variable "node_group_min_capacity" {
   description = "The minimum capacity of the node group"
   type        = number
+  default = 1
 }
 
 variable "node_group_ami_type" {
