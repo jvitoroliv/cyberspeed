@@ -1,0 +1,47 @@
+body {
+  background-color: #64B5F6;
+  font-family: Arial, sans-serif;
+}
+
+.container, .form-container {
+  background-color: #E8EAF6;
+  border: 2px solid #0288D1;
+  margin: 30px auto;
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+input[type="radio"],
+button {
+  margin: 5px 0;
+}
+
+button {
+  background-color: #0288D1;
+  color: white;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+a {
+  color: #0288D1;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+label {
+  margin-right: 10px;
+}
