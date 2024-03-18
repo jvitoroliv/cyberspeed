@@ -9,7 +9,7 @@ module "vpc" {
 module "security" {
   source              = "./modules/security"
   cluster_name        = var.cluster_name
-  vpc_id              = module.vpc.output.vpc_id
+  vpc_id              = module.vpc.vpc_id
   eks_port_from       = var.eks_port
   eks_port_to         = var.eks_port
   allowed_cidr_blocks = var.allowed_cidr_blocks
@@ -19,7 +19,7 @@ module "eks" {
   source                      = "./modules/eks"
   region                      = var.region
   cluster_name                = var.cluster_name
-  subnet_ids                  = var.subnet_ids
+  subnet_ids                  = module.vpc.private_subnets
   node_group_desired_capacity = var.node_group_desired_capacity
   node_group_max_capacity     = var.node_group_max_capacity
   node_group_min_capacity     = var.node_group_min_capacity
