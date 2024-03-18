@@ -1,2 +1,7 @@
 #ignore sensitive information in the version control
 *.env
+*.pem
+*.terraform.lock.hcl
+*.tfstate
+*.tfstate.backup
+.terraform/
