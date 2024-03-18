@@ -24,6 +24,7 @@ module "atlantis" {
         value = "jvitoroliv"
       },
     ]
+    image = "851725424717.dkr.ecr.us-east-1.amazonaws.com/atlantis-server:1.0.4"
     secrets = [
       {
         name      = "ATLANTIS_WEB_PASSWORD"

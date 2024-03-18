@@ -1,6 +1,6 @@
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "18.28.0"
+  version = "19.21.0"
 
   ###### EKS Cluster ######
 
@@ -41,7 +41,7 @@ module "eks" {
     }
     kube-proxy = {}
     vpc-cni = {
-      resolve_conflicts = "OVERWRITE"
+      resolve_conflicts_on_update = "OVERWRITE"
     }
   }
 
@@ -125,10 +125,11 @@ module "eks" {
       instance_types = ["${var.node_instances_type}"]
       capacity_type  = "SPOT"
 
-      iam_role_additional_policies = [
-      "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
-      "${module.cluster.lb_controller_policy.arn}"
-    ]
+      iam_role_additional_policies = {
+        "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore" = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+        "${module.cluster.lb_controller_policy.arn}" = "${module.cluster.lb_controller_policy.arn}"
+      }
+      
 
       tags = "${merge(var.tags)}"
     }
