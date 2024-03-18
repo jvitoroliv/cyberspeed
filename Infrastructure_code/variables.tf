@@ -10,11 +10,6 @@ variable "cluster_name" {
   default     = "cyberspeed-project"
 }
 
-variable "subnet_ids" {
-  description = "A list of subnet IDs for the EKS cluster"
-  type        = list(string)
-}
-
 variable "node_group_desired_capacity" {
   description = "The desired capacity of the node group"
   type        = number
