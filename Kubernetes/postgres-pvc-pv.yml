@@ -1,14 +1,14 @@
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: postgres-pv-volume  # Sets PV's name
+  name: postgres-pv-volume  
   labels:
-    type: local  # Sets PV's type to local
+    type: local
     app: postgres-db
 spec:
   storageClassName: manual
   capacity:
-    storage: 5Gi # Sets PV Volume
+    storage: 5Gi
   accessModes:
     - ReadWriteMany
   hostPath:
@@ -17,13 +17,11 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: postgres-pv-claim  # Sets name of PVC
-  labels:
-    app: postgres-db
+  name: postgres-pv-claim
 spec:
-  storageClassName: manual
+  storageClassName: gp2  # AWS General Purpose SSD
   accessModes:
-    - ReadWriteMany  # Sets read and write access
+    - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi  # Sets volume size
+      storage: 5Gi
