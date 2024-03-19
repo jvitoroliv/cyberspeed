@@ -25,7 +25,7 @@ variable "tags" {
 
 ###### Network vars ######
 variable "vpc_name" {
-  default = "cyberspeed"
+  default = "cyberspeed-test"
 }
 variable "cidr_block" {
   default = "10.1"
@@ -34,7 +34,7 @@ variable "cidr_block" {
 
 ###### Cluster vars ######
 variable "cluster_name" {
-  default = "cyberspeed"
+  default = "cyberspeed-test"
 }
 variable "k8s_version" {
   default = "1.27"

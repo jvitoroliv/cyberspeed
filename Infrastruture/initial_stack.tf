@@ -1,17 +1,17 @@
-# module "network" {
-#   source = "./modules/network"
+module "network" {
+  source = "./modules/network"
 
-#   aws_region   = var.aws_region
-#   vpc_name     = var.vpc_name
-#   cidr_block   = var.cidr_block
-#   cluster_name = var.cluster_name
-# }
+  aws_region   = var.aws_region
+  vpc_name     = var.vpc_name
+  cidr_block   = var.cidr_block
+  cluster_name = var.cluster_name
+}
 
-# module "cluster" {
-#   source = "./modules/eks/cluster"
+module "cluster" {
+  source = "./modules/eks/cluster"
 
-#   vpc_id       = module.network.vpc.id
-#   cluster_name = var.cluster_name
+  vpc_id       = module.network.vpc.id
+  cluster_name = var.cluster_name
 
-#   depends_on = [ module.network ]
-# }
+  depends_on = [ module.network ]
+}
