@@ -143,7 +143,7 @@ resource "aws_iam_role" "eks_administrator_access" {
       {
         Sid       = "Statement1"
         Effect    = "Allow"
-        Principal = {"Service": "eks.amazonaws.com"}
+        Principal = { "Service" : "eks.amazonaws.com" }
         Action    = "sts:AssumeRole"
       },
     ]
