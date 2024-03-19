@@ -7,11 +7,11 @@ module "network" {
   cluster_name = var.cluster_name
 }
 
-module "cluster" {
-  source = "./modules/eks/cluster"
+module "iam" {
+  source = "./modules/iam"
 
   vpc_id       = module.network.vpc.id
   cluster_name = var.cluster_name
 
-  depends_on = [ module.network ]
+  depends_on = [module.network]
 }

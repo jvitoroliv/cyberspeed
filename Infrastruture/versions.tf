@@ -17,7 +17,7 @@ terraform {
   }
   backend "s3" {
     bucket = "cyberspeed-project-tfstate"
-    key    = "cyberspeed/project-test/tfstate"
+    key    = "cyberspeed/project-v2/tfstate"
     region = "us-east-1"
   }
 }
