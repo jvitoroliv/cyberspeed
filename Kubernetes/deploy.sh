@@ -21,9 +21,10 @@ if ! kubectl get namespace "${NAMESPACE}" > /dev/null 2>&1; then
 fi
 echo
 
-# Apply the Postgres ConfigMap
-echo "Applying Postgres ConfigMap..."
-envsubst < postgres-configmap.yml | kubectl apply -f - -n "${NAMESPACE}" && echo "Postgres ConfigMap applied successfully." || echo "Failed to apply Postgres ConfigMap."
+# Apply the MySQL Helm chart
+echo "Applying mysql helm chart..."
+helm repo add choerodon https://openchart.choerodon.com.cn/choerodon/c7n
+helm install cyberspeed-mysql choerodon/mysql --version 8.5.1
 echo
 
 # Deploy the backend application
@@ -39,21 +40,6 @@ echo
 # Deploy the frontend service
 echo "Creating frontend service..."
 kubectl apply -f frontend-app-svc.yml -n "${NAMESPACE}" && echo "Frontend service created successfully." || echo "Failed to create frontend service."
-echo
-
-# Deploy the Postgres deployment
-echo "Deploying Postgres..."
-kubectl apply -f postgres-deployment.yml -n "${NAMESPACE}" && echo "Postgres deployed successfully." || echo "Failed to deploy Postgres."
-echo
-
-# Apply the Postgres PVC
-echo "Applying Postgres PVC..."
-kubectl apply -f postgres-pvc-pv.yml -n "${NAMESPACE}" && echo "Postgres PVC applied successfully." || echo "Failed to apply Postgres PVC."
-echo
-
-# Create the Postgres service
-echo "Creating Postgres service..."
-kubectl apply -f postgres-svc.yml -n "${NAMESPACE}" && echo "Postgres service created successfully." || echo "Failed to create Postgres service."
 echo
 
 echo "Kubernetes deployment script completed."
