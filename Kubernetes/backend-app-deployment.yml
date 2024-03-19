@@ -7,8 +7,6 @@ spec:
     matchLabels:
       app: nodejs-app
   replicas: 4
-  strategy:
-    type: RollingUpdate  # Ensures zero-downtime deployments
   template:
     metadata:
       labels:
@@ -17,7 +15,7 @@ spec:
       containers:
         - name: nodejs-app
           image: node:19-alpine3.16
-          command: ["node", "app.js"]
+          command: ["sleep", "100000"]
           resources: 
             requests:
               cpu: "100m"
