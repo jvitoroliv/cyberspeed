@@ -109,6 +109,6 @@ variable "access_entries_eks_admin" {
 
 ###### SSM Parameters vars ######
 variable "ssm_secret_database_name" {
-  type = string
+  type    = string
   default = "/projects/cyberspeed/database/password/master"
 }

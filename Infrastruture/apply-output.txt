@@ -1,0 +1,2376 @@
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 0s [id=851725424717][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [32m+[0m create[0m
+ [36m<=[0m read (data resources)[0m
+
+Terraform will perform the following actions:
+
+[1m  # module.iam.aws_iam_policy.eks_admin_policy[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "eks_admin_policy" {
+      [32m+[0m[0m arn         = (known after apply)
+      [32m+[0m[0m description = "Admin policy for managing EKS clusters and worker nodes."
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "AmazonEKSAdminPolicy"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m path        = "/"
+      [32m+[0m[0m policy      = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "eks:*",
+                          [32m+[0m[0m "ec2:DescribeInstances",
+                          [32m+[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [32m+[0m[0m "ec2:DescribeSubnets",
+                          [32m+[0m[0m "ec2:DescribeSecurityGroups",
+                          [32m+[0m[0m "ec2:DescribeKeyPairs",
+                          [32m+[0m[0m "iam:PassRole",
+                          [32m+[0m[0m "iam:GetRole",
+                          [32m+[0m[0m "iam:CreateServiceLinkedRole",
+                          [32m+[0m[0m "autoscaling:DescribeAutoScalingGroups",
+                          [32m+[0m[0m "cloudformation:*",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id   = (known after apply)
+      [32m+[0m[0m tags_all    = (known after apply)
+    }
+
+[1m  # module.iam.aws_iam_policy.policy[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "policy" {
+      [32m+[0m[0m arn         = (known after apply)
+      [32m+[0m[0m description = "AWSLoadBalancerControllerIAMPolicy"
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = "cyberspeed-assessment-load-balance-controller"
+      [32m+[0m[0m name_prefix = (known after apply)
+      [32m+[0m[0m path        = "/"
+      [32m+[0m[0m policy      = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "iam:CreateServiceLinkedRole",
+                          [32m+[0m[0m "ec2:DescribeAccountAttributes",
+                          [32m+[0m[0m "ec2:DescribeAddresses",
+                          [32m+[0m[0m "ec2:DescribeAvailabilityZones",
+                          [32m+[0m[0m "ec2:DescribeInternetGateways",
+                          [32m+[0m[0m "ec2:DescribeVpcs",
+                          [32m+[0m[0m "ec2:DescribeVpcPeeringConnections",
+                          [32m+[0m[0m "ec2:DescribeSubnets",
+                          [32m+[0m[0m "ec2:DescribeSecurityGroups",
+                          [32m+[0m[0m "ec2:DescribeInstances",
+                          [32m+[0m[0m "ec2:DescribeNetworkInterfaces",
+                          [32m+[0m[0m "ec2:DescribeTags",
+                          [32m+[0m[0m "ec2:GetCoipPoolUsage",
+                          [32m+[0m[0m "ec2:DescribeCoipPools",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancers",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListeners",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeSSLPolicies",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeRules",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroups",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTargetHealth",
+                          [32m+[0m[0m "elasticloadbalancing:DescribeTags",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "cognito-idp:DescribeUserPoolClient",
+                          [32m+[0m[0m "acm:ListCertificates",
+                          [32m+[0m[0m "acm:DescribeCertificate",
+                          [32m+[0m[0m "iam:ListServerCertificates",
+                          [32m+[0m[0m "iam:GetServerCertificate",
+                          [32m+[0m[0m "waf-regional:GetWebACL",
+                          [32m+[0m[0m "waf-regional:GetWebACLForResource",
+                          [32m+[0m[0m "waf-regional:AssociateWebACL",
+                          [32m+[0m[0m "waf-regional:DisassociateWebACL",
+                          [32m+[0m[0m "wafv2:GetWebACL",
+                          [32m+[0m[0m "wafv2:GetWebACLForResource",
+                          [32m+[0m[0m "wafv2:AssociateWebACL",
+                          [32m+[0m[0m "wafv2:DisassociateWebACL",
+                          [32m+[0m[0m "shield:GetSubscriptionState",
+                          [32m+[0m[0m "shield:DescribeProtection",
+                          [32m+[0m[0m "shield:CreateProtection",
+                          [32m+[0m[0m "shield:DeleteProtection",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:CreateSecurityGroup",
+                          [32m+[0m[0m "ec2:CreateTags",
+                          [32m+[0m[0m "ec2:DeleteTags",
+                          [32m+[0m[0m "ec2:AuthorizeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:RevokeSecurityGroupIngress",
+                          [32m+[0m[0m "ec2:DeleteSecurityGroup",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action   = [
+                          [32m+[0m[0m "elasticloadbalancing:CreateListener",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteListener",
+                          [32m+[0m[0m "elasticloadbalancing:CreateRule",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteRule",
+                          [32m+[0m[0m "elasticloadbalancing:AddTags",
+                          [32m+[0m[0m "elasticloadbalancing:RemoveTags",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyLoadBalancerAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:SetIpAddressType",
+                          [32m+[0m[0m "elasticloadbalancing:SetSecurityGroups",
+                          [32m+[0m[0m "elasticloadbalancing:SetSubnets",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteLoadBalancer",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyTargetGroupAttributes",
+                          [32m+[0m[0m "elasticloadbalancing:DeleteTargetGroup",
+                          [32m+[0m[0m "elasticloadbalancing:RegisterTargets",
+                          [32m+[0m[0m "elasticloadbalancing:DeregisterTargets",
+                          [32m+[0m[0m "elasticloadbalancing:SetWebAcl",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyListener",
+                          [32m+[0m[0m "elasticloadbalancing:AddListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:RemoveListenerCertificates",
+                          [32m+[0m[0m "elasticloadbalancing:ModifyRule",
+                          [32m+[0m[0m "elasticloadbalancing:CreateLoadBalancer",
+                          [32m+[0m[0m "elasticloadbalancing:CreateTargetGroup",
+                        ]
+                      [32m+[0m[0m Effect   = "Allow"
+                      [32m+[0m[0m Resource = "*"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m policy_id   = (known after apply)
+      [32m+[0m[0m tags_all    = (known after apply)
+    }
+
+[1m  # module.iam.aws_iam_role.eks_administrator_access[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "eks_administrator_access" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = "sts:AssumeRole"
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "eks.amazonaws.com"
+                        }
+                      [32m+[0m[0m Sid       = "Statement1"
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "EKSAdministratorAccess"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+    }
+
+[1m  # module.iam.aws_iam_role.eks_cluster_role[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "eks_cluster_role" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = jsonencode(
+            {
+              [32m+[0m[0m Statement = [
+                  [32m+[0m[0m {
+                      [32m+[0m[0m Action    = [
+                          [32m+[0m[0m "sts:AssumeRole",
+                          [32m+[0m[0m "sts:AssumeRoleWithWebIdentity",
+                        ]
+                      [32m+[0m[0m Effect    = "Allow"
+                      [32m+[0m[0m Principal = {
+                          [32m+[0m[0m Service = "eks.amazonaws.com"
+                        }
+                    },
+                ]
+              [32m+[0m[0m Version   = "2012-10-17"
+            }
+        )
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = false
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = "cyberspeed-assessment-cluster-ServiceRole"
+      [32m+[0m[0m name_prefix           = (known after apply)
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+    }
+
+[1m  # module.iam.aws_iam_role_policy_attachment.eks_administrator_access_attach[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "eks_administrator_access_attach" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = "EKSAdministratorAccess"
+    }
+
+[1m  # module.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSClusterPolicy[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "eks_cluster-AmazonEKSClusterPolicy" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
+      [32m+[0m[0m role       = "cyberspeed-assessment-cluster-ServiceRole"
+    }
+
+[1m  # module.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSServicePolicy[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "eks_cluster-AmazonEKSServicePolicy" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/AmazonEKSServicePolicy"
+      [32m+[0m[0m role       = "cyberspeed-assessment-cluster-ServiceRole"
+    }
+
+[1m  # module.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonSSMManagedInstanceCore[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "eks_cluster-AmazonSSMManagedInstanceCore" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
+      [32m+[0m[0m role       = "cyberspeed-assessment-cluster-ServiceRole"
+    }
+
+[1m  # module.iam.aws_iam_role_policy_attachment.eks_load-balancer-controller[0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "eks_load-balancer-controller" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = "cyberspeed-assessment-cluster-ServiceRole"
+    }
+
+[1m  # module.network.aws_eip.nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_eip" "nat" {
+      [32m+[0m[0m allocation_id        = (known after apply)
+      [32m+[0m[0m association_id       = (known after apply)
+      [32m+[0m[0m carrier_ip           = (known after apply)
+      [32m+[0m[0m customer_owned_ip    = (known after apply)
+      [32m+[0m[0m domain               = "vpc"
+      [32m+[0m[0m id                   = (known after apply)
+      [32m+[0m[0m instance             = (known after apply)
+      [32m+[0m[0m network_border_group = (known after apply)
+      [32m+[0m[0m network_interface    = (known after apply)
+      [32m+[0m[0m private_dns          = (known after apply)
+      [32m+[0m[0m private_ip           = (known after apply)
+      [32m+[0m[0m public_dns           = (known after apply)
+      [32m+[0m[0m public_ip            = (known after apply)
+      [32m+[0m[0m public_ipv4_pool     = (known after apply)
+      [32m+[0m[0m tags                 = {
+          [32m+[0m[0m "Name" = "nat"
+        }
+      [32m+[0m[0m tags_all             = {
+          [32m+[0m[0m "Name" = "nat"
+        }
+      [32m+[0m[0m vpc                  = (known after apply)
+    }
+
+[1m  # module.network.aws_internet_gateway.igw[0m will be created
+[0m  [32m+[0m[0m resource "aws_internet_gateway" "igw" {
+      [32m+[0m[0m arn      = (known after apply)
+      [32m+[0m[0m id       = (known after apply)
+      [32m+[0m[0m owner_id = (known after apply)
+      [32m+[0m[0m tags     = {
+          [32m+[0m[0m "Name" = "igw"
+        }
+      [32m+[0m[0m tags_all = {
+          [32m+[0m[0m "Name" = "igw"
+        }
+      [32m+[0m[0m vpc_id   = (known after apply)
+    }
+
+[1m  # module.network.aws_nat_gateway.nat[0m will be created
+[0m  [32m+[0m[0m resource "aws_nat_gateway" "nat" {
+      [32m+[0m[0m allocation_id                      = (known after apply)
+      [32m+[0m[0m association_id                     = (known after apply)
+      [32m+[0m[0m connectivity_type                  = "public"
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m network_interface_id               = (known after apply)
+      [32m+[0m[0m private_ip                         = (known after apply)
+      [32m+[0m[0m public_ip                          = (known after apply)
+      [32m+[0m[0m secondary_private_ip_address_count = (known after apply)
+      [32m+[0m[0m secondary_private_ip_addresses     = (known after apply)
+      [32m+[0m[0m subnet_id                          = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Name" = "nat"
+        }
+      [32m+[0m[0m tags_all                           = {
+          [32m+[0m[0m "Name" = "nat"
+        }
+    }
+
+[1m  # module.network.aws_route_table.private[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "private" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = ""
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = (known after apply)
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "private"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "private"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table.public[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table" "public" {
+      [32m+[0m[0m arn              = (known after apply)
+      [32m+[0m[0m id               = (known after apply)
+      [32m+[0m[0m owner_id         = (known after apply)
+      [32m+[0m[0m propagating_vgws = (known after apply)
+      [32m+[0m[0m route            = [
+          [32m+[0m[0m {
+              [32m+[0m[0m carrier_gateway_id         = ""
+              [32m+[0m[0m cidr_block                 = "0.0.0.0/0"
+              [32m+[0m[0m core_network_arn           = ""
+              [32m+[0m[0m destination_prefix_list_id = ""
+              [32m+[0m[0m egress_only_gateway_id     = ""
+              [32m+[0m[0m gateway_id                 = (known after apply)
+              [32m+[0m[0m ipv6_cidr_block            = ""
+              [32m+[0m[0m local_gateway_id           = ""
+              [32m+[0m[0m nat_gateway_id             = ""
+              [32m+[0m[0m network_interface_id       = ""
+              [32m+[0m[0m transit_gateway_id         = ""
+              [32m+[0m[0m vpc_endpoint_id            = ""
+              [32m+[0m[0m vpc_peering_connection_id  = ""
+            },
+        ]
+      [32m+[0m[0m tags             = {
+          [32m+[0m[0m "Name" = "public"
+        }
+      [32m+[0m[0m tags_all         = {
+          [32m+[0m[0m "Name" = "public"
+        }
+      [32m+[0m[0m vpc_id           = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.private_subnet_1a[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_subnet_1a" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.private_subnet_1b[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_subnet_1b" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.private_subnet_1c[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "private_subnet_1c" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.public_subnet_1a[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "public_subnet_1a" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.public_subnet_1b[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "public_subnet_1b" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_route_table_association.public_subnet_1c[0m will be created
+[0m  [32m+[0m[0m resource "aws_route_table_association" "public_subnet_1c" {
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m route_table_id = (known after apply)
+      [32m+[0m[0m subnet_id      = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.private_subnet_1a[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "private_subnet_1a" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.0.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1a"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1a"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.private_subnet_1b[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "private_subnet_1b" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.32.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1b"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1b"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.private_subnet_1c[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "private_subnet_1c" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1c"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.64.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = false
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1c"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                                  = "VPC_NAME-private-1c"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment"           = "shared"
+          [32m+[0m[0m "kubernetes.io/role/internal-elb"                       = "1"
+          [32m+[0m[0m "service.beta.kubernetes.io/aws-load-balancer-internal" = "true"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.public_subnet_1a[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "public_subnet_1a" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1a"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.96.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1a"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1a"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.public_subnet_1b[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "public_subnet_1b" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1b"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.128.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1b"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1b"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_subnet.public_subnet_1c[0m will be created
+[0m  [32m+[0m[0m resource "aws_subnet" "public_subnet_1c" {
+      [32m+[0m[0m arn                                            = (known after apply)
+      [32m+[0m[0m assign_ipv6_address_on_creation                = false
+      [32m+[0m[0m availability_zone                              = "us-east-1c"
+      [32m+[0m[0m availability_zone_id                           = (known after apply)
+      [32m+[0m[0m cidr_block                                     = "10.1.160.0/19"
+      [32m+[0m[0m enable_dns64                                   = false
+      [32m+[0m[0m enable_resource_name_dns_a_record_on_launch    = false
+      [32m+[0m[0m enable_resource_name_dns_aaaa_record_on_launch = false
+      [32m+[0m[0m id                                             = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_association_id                 = (known after apply)
+      [32m+[0m[0m ipv6_native                                    = false
+      [32m+[0m[0m map_public_ip_on_launch                        = true
+      [32m+[0m[0m owner_id                                       = (known after apply)
+      [32m+[0m[0m private_dns_hostname_type_on_launch            = (known after apply)
+      [32m+[0m[0m tags                                           = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1c"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m tags_all                                       = {
+          [32m+[0m[0m "Name"                                        = "VPC_NAME-public-1c"
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "shared"
+          [32m+[0m[0m "kubernetes.io/role/elb"                      = "1"
+        }
+      [32m+[0m[0m vpc_id                                         = (known after apply)
+    }
+
+[1m  # module.network.aws_vpc.vpc[0m will be created
+[0m  [32m+[0m[0m resource "aws_vpc" "vpc" {
+      [32m+[0m[0m arn                                  = (known after apply)
+      [32m+[0m[0m cidr_block                           = "10.1.0.0/16"
+      [32m+[0m[0m default_network_acl_id               = (known after apply)
+      [32m+[0m[0m default_route_table_id               = (known after apply)
+      [32m+[0m[0m default_security_group_id            = (known after apply)
+      [32m+[0m[0m dhcp_options_id                      = (known after apply)
+      [32m+[0m[0m enable_dns_hostnames                 = true
+      [32m+[0m[0m enable_dns_support                   = true
+      [32m+[0m[0m enable_network_address_usage_metrics = (known after apply)
+      [32m+[0m[0m id                                   = (known after apply)
+      [32m+[0m[0m instance_tenancy                     = "default"
+      [32m+[0m[0m ipv6_association_id                  = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block                      = (known after apply)
+      [32m+[0m[0m ipv6_cidr_block_network_border_group = (known after apply)
+      [32m+[0m[0m main_route_table_id                  = (known after apply)
+      [32m+[0m[0m owner_id                             = (known after apply)
+      [32m+[0m[0m tags                                 = {
+          [32m+[0m[0m "Name" = "VPC_NAME-vpc"
+        }
+      [32m+[0m[0m tags_all                             = {
+          [32m+[0m[0m "Name" = "VPC_NAME-vpc"
+        }
+    }
+
+[1m  # module.secrets.aws_ssm_parameter.secret_database[0m will be created
+[0m  [32m+[0m[0m resource "aws_ssm_parameter" "secret_database" {
+      [32m+[0m[0m arn            = (known after apply)
+      [32m+[0m[0m data_type      = (known after apply)
+      [32m+[0m[0m description    = "The root password for mysql database"
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m insecure_value = (known after apply)
+      [32m+[0m[0m key_id         = (known after apply)
+      [32m+[0m[0m name           = "/projects/cyberspeed/database/password/master"
+      [32m+[0m[0m tags           = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all       = (known after apply)
+      [32m+[0m[0m tier           = (known after apply)
+      [32m+[0m[0m type           = "SecureString"
+      [32m+[0m[0m value          = (sensitive value)
+      [32m+[0m[0m version        = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_caller_identity.current[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_caller_identity" "current" {
+      [32m+[0m[0m account_id = (known after apply)
+      [32m+[0m[0m arn        = (known after apply)
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m user_id    = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_eks_addon_version.this["coredns"][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_eks_addon_version" "this" {
+      [32m+[0m[0m addon_name         = "coredns"
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m kubernetes_version = "1.29"
+      [32m+[0m[0m most_recent        = true
+      [32m+[0m[0m version            = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_eks_addon_version.this["kube-proxy"][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_eks_addon_version" "this" {
+      [32m+[0m[0m addon_name         = "kube-proxy"
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m kubernetes_version = "1.29"
+      [32m+[0m[0m most_recent        = true
+      [32m+[0m[0m version            = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_eks_addon_version.this["vpc-cni"][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_eks_addon_version" "this" {
+      [32m+[0m[0m addon_name         = "vpc-cni"
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m kubernetes_version = "1.29"
+      [32m+[0m[0m most_recent        = true
+      [32m+[0m[0m version            = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_iam_policy_document.assume_role_policy[0][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_iam_policy_document" "assume_role_policy" {
+      [32m+[0m[0m id   = (known after apply)
+      [32m+[0m[0m json = (known after apply)
+
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions = [
+              [32m+[0m[0m "sts:AssumeRole",
+            ]
+          [32m+[0m[0m sid     = "EKSClusterAssumeRole"
+
+          [32m+[0m[0m principals {
+              [32m+[0m[0m identifiers = [
+                  [32m+[0m[0m "eks.amazonaws.com",
+                ]
+              [32m+[0m[0m type        = "Service"
+            }
+        }
+    }
+
+[1m  # module.eks.module.eks.data.aws_iam_session_context.current[0m will be read during apply
+  # (config refers to values not yet known)
+[0m [36m<=[0m[0m data "aws_iam_session_context" "current" {
+      [32m+[0m[0m arn          = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m issuer_arn   = (known after apply)
+      [32m+[0m[0m issuer_id    = (known after apply)
+      [32m+[0m[0m issuer_name  = (known after apply)
+      [32m+[0m[0m session_name = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.aws_partition.current[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_partition" "current" {
+      [32m+[0m[0m dns_suffix         = (known after apply)
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m partition          = (known after apply)
+      [32m+[0m[0m reverse_dns_prefix = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.data.tls_certificate.this[0][0m will be read during apply
+  # (config refers to values not yet known)
+[0m [36m<=[0m[0m data "tls_certificate" "this" {
+      [32m+[0m[0m certificates = (known after apply)
+      [32m+[0m[0m id           = (known after apply)
+      [32m+[0m[0m url          = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_cloudwatch_log_group.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_cloudwatch_log_group" "this" {
+      [32m+[0m[0m arn               = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m log_group_class   = (known after apply)
+      [32m+[0m[0m name              = "/aws/eks/cyberspeed-assessment/cluster"
+      [32m+[0m[0m name_prefix       = (known after apply)
+      [32m+[0m[0m retention_in_days = 90
+      [32m+[0m[0m skip_destroy      = false
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Name"                 = "/aws/eks/cyberspeed-assessment/cluster"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all          = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Environment"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Environment"
+      [32m+[0m[0m resource_id = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Managed_by_Terraform"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Managed_by_Terraform"
+      [32m+[0m[0m resource_id = (known after apply)
+      [32m+[0m[0m value       = "true"
+    }
+
+[1m  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Owner"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Owner"
+      [32m+[0m[0m resource_id = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Project"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "Project"
+      [32m+[0m[0m resource_id = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["kubernetes.io/cluster/cyberspeed-assessment"][0m will be created
+[0m  [32m+[0m[0m resource "aws_ec2_tag" "cluster_primary_security_group" {
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m key         = "kubernetes.io/cluster/cyberspeed-assessment"
+      [32m+[0m[0m resource_id = (known after apply)
+      [32m+[0m[0m value       = "cyberspeed-assessment"
+    }
+
+[1m  # module.eks.module.eks.aws_eks_access_entry.this["cluster-admin"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_access_entry" "this" {
+      [32m+[0m[0m access_entry_arn  = (known after apply)
+      [32m+[0m[0m cluster_name      = "cyberspeed-assessment"
+      [32m+[0m[0m created_at        = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m kubernetes_groups = [
+          [32m+[0m[0m "cluster-admin",
+        ]
+      [32m+[0m[0m modified_at       = (known after apply)
+      [32m+[0m[0m principal_arn     = (known after apply)
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all          = (known after apply)
+      [32m+[0m[0m type              = "STANDARD"
+      [32m+[0m[0m user_name         = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_eks_access_entry.this["cluster_creator"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_access_entry" "this" {
+      [32m+[0m[0m access_entry_arn  = (known after apply)
+      [32m+[0m[0m cluster_name      = "cyberspeed-assessment"
+      [32m+[0m[0m created_at        = (known after apply)
+      [32m+[0m[0m id                = (known after apply)
+      [32m+[0m[0m kubernetes_groups = (known after apply)
+      [32m+[0m[0m modified_at       = (known after apply)
+      [32m+[0m[0m principal_arn     = (known after apply)
+      [32m+[0m[0m tags              = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all          = (known after apply)
+      [32m+[0m[0m type              = "STANDARD"
+      [32m+[0m[0m user_name         = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_access_policy_association" "this" {
+      [32m+[0m[0m associated_at = (known after apply)
+      [32m+[0m[0m cluster_name  = "cyberspeed-assessment"
+      [32m+[0m[0m id            = (known after apply)
+      [32m+[0m[0m modified_at   = (known after apply)
+      [32m+[0m[0m policy_arn    = (known after apply)
+      [32m+[0m[0m principal_arn = (known after apply)
+
+      [32m+[0m[0m access_scope {
+          [32m+[0m[0m type = "cluster"
+        }
+    }
+
+[1m  # module.eks.module.eks.aws_eks_addon.this["coredns"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_addon" "this" {
+      [32m+[0m[0m addon_name                  = "coredns"
+      [32m+[0m[0m addon_version               = (known after apply)
+      [32m+[0m[0m arn                         = (known after apply)
+      [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+      [32m+[0m[0m configuration_values        = (known after apply)
+      [32m+[0m[0m created_at                  = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m modified_at                 = (known after apply)
+      [32m+[0m[0m preserve                    = true
+      [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+      [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+      [32m+[0m[0m tags                        = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all                    = (known after apply)
+
+      [32m+[0m[0m timeouts {}
+    }
+
+[1m  # module.eks.module.eks.aws_eks_addon.this["kube-proxy"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_addon" "this" {
+      [32m+[0m[0m addon_name                  = "kube-proxy"
+      [32m+[0m[0m addon_version               = (known after apply)
+      [32m+[0m[0m arn                         = (known after apply)
+      [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+      [32m+[0m[0m configuration_values        = (known after apply)
+      [32m+[0m[0m created_at                  = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m modified_at                 = (known after apply)
+      [32m+[0m[0m preserve                    = true
+      [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+      [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+      [32m+[0m[0m tags                        = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all                    = (known after apply)
+
+      [32m+[0m[0m timeouts {}
+    }
+
+[1m  # module.eks.module.eks.aws_eks_addon.this["vpc-cni"][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_addon" "this" {
+      [32m+[0m[0m addon_name                  = "vpc-cni"
+      [32m+[0m[0m addon_version               = (known after apply)
+      [32m+[0m[0m arn                         = (known after apply)
+      [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+      [32m+[0m[0m configuration_values        = (known after apply)
+      [32m+[0m[0m created_at                  = (known after apply)
+      [32m+[0m[0m id                          = (known after apply)
+      [32m+[0m[0m modified_at                 = (known after apply)
+      [32m+[0m[0m preserve                    = true
+      [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+      [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+      [32m+[0m[0m tags                        = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all                    = (known after apply)
+
+      [32m+[0m[0m timeouts {}
+    }
+
+[1m  # module.eks.module.eks.aws_eks_cluster.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_cluster" "this" {
+      [32m+[0m[0m arn                       = (known after apply)
+      [32m+[0m[0m certificate_authority     = (known after apply)
+      [32m+[0m[0m cluster_id                = (known after apply)
+      [32m+[0m[0m created_at                = (known after apply)
+      [32m+[0m[0m enabled_cluster_log_types = [
+          [32m+[0m[0m "api",
+          [32m+[0m[0m "audit",
+          [32m+[0m[0m "authenticator",
+        ]
+      [32m+[0m[0m endpoint                  = (known after apply)
+      [32m+[0m[0m id                        = (known after apply)
+      [32m+[0m[0m identity                  = (known after apply)
+      [32m+[0m[0m name                      = "cyberspeed-assessment"
+      [32m+[0m[0m platform_version          = (known after apply)
+      [32m+[0m[0m role_arn                  = (known after apply)
+      [32m+[0m[0m status                    = (known after apply)
+      [32m+[0m[0m tags                      = {
+          [32m+[0m[0m "Environment"                                 = ""
+          [32m+[0m[0m "Managed_by_Terraform"                        = "true"
+          [32m+[0m[0m "Owner"                                       = ""
+          [32m+[0m[0m "Project"                                     = ""
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "cyberspeed-assessment"
+          [32m+[0m[0m "terraform-aws-modules"                       = "eks"
+        }
+      [32m+[0m[0m tags_all                  = (known after apply)
+      [32m+[0m[0m version                   = "1.29"
+
+      [32m+[0m[0m access_config {
+          [32m+[0m[0m authentication_mode                         = "API_AND_CONFIG_MAP"
+          [32m+[0m[0m bootstrap_cluster_creator_admin_permissions = false
+        }
+
+      [32m+[0m[0m encryption_config {
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "secrets",
+            ]
+
+          [32m+[0m[0m provider {
+              [32m+[0m[0m key_arn = (known after apply)
+            }
+        }
+
+      [32m+[0m[0m kubernetes_network_config {
+          [32m+[0m[0m ip_family         = "ipv4"
+          [32m+[0m[0m service_ipv4_cidr = (known after apply)
+          [32m+[0m[0m service_ipv6_cidr = (known after apply)
+        }
+
+      [32m+[0m[0m timeouts {}
+
+      [32m+[0m[0m vpc_config {
+          [32m+[0m[0m cluster_security_group_id = (known after apply)
+          [32m+[0m[0m endpoint_private_access   = true
+          [32m+[0m[0m endpoint_public_access    = true
+          [32m+[0m[0m public_access_cidrs       = [
+              [32m+[0m[0m "0.0.0.0/0",
+            ]
+          [32m+[0m[0m security_group_ids        = (known after apply)
+          [32m+[0m[0m subnet_ids                = (known after apply)
+          [32m+[0m[0m vpc_id                    = (known after apply)
+        }
+    }
+
+[1m  # module.eks.module.eks.aws_iam_openid_connect_provider.oidc_provider[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_openid_connect_provider" "oidc_provider" {
+      [32m+[0m[0m arn             = (known after apply)
+      [32m+[0m[0m client_id_list  = [
+          [32m+[0m[0m "sts.amazonaws.com",
+        ]
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m tags            = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Name"                 = "cyberspeed-assessment-eks-irsa"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all        = (known after apply)
+      [32m+[0m[0m thumbprint_list = (known after apply)
+      [32m+[0m[0m url             = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_iam_policy.cluster_encryption[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_policy" "cluster_encryption" {
+      [32m+[0m[0m arn         = (known after apply)
+      [32m+[0m[0m description = "Cluster encryption policy to allow cluster role to utilize CMK provided"
+      [32m+[0m[0m id          = (known after apply)
+      [32m+[0m[0m name        = (known after apply)
+      [32m+[0m[0m name_prefix = "cyberspeed-assessment-cluster-ClusterEncryption"
+      [32m+[0m[0m path        = "/"
+      [32m+[0m[0m policy      = (known after apply)
+      [32m+[0m[0m policy_id   = (known after apply)
+      [32m+[0m[0m tags        = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all    = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_iam_role.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "this" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = (known after apply)
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m force_detach_policies = true
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = (known after apply)
+      [32m+[0m[0m name_prefix           = "cyberspeed-assessment-cluster-"
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+
+      [32m+[0m[0m inline_policy {
+          [32m+[0m[0m name   = "cyberspeed-assessment-cluster"
+          [32m+[0m[0m policy = jsonencode(
+                {
+                  [32m+[0m[0m Statement = [
+                      [32m+[0m[0m {
+                          [32m+[0m[0m Action   = [
+                              [32m+[0m[0m "logs:CreateLogGroup",
+                            ]
+                          [32m+[0m[0m Effect   = "Deny"
+                          [32m+[0m[0m Resource = "*"
+                        },
+                    ]
+                  [32m+[0m[0m Version   = "2012-10-17"
+                }
+            )
+        }
+    }
+
+[1m  # module.eks.module.eks.aws_iam_role_policy_attachment.cluster_encryption[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "cluster_encryption" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_security_group.cluster[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "cluster" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "EKS cluster security group"
+      [32m+[0m[0m egress                 = (known after apply)
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = (known after apply)
+      [32m+[0m[0m name_prefix            = "cyberspeed-assessment-cluster-"
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Name"                 = "cyberspeed-assessment-cluster"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_security_group.node[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group" "node" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m description            = "EKS node shared security group"
+      [32m+[0m[0m egress                 = (known after apply)
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m ingress                = (known after apply)
+      [32m+[0m[0m name                   = (known after apply)
+      [32m+[0m[0m name_prefix            = "cyberspeed-assessment-node-"
+      [32m+[0m[0m owner_id               = (known after apply)
+      [32m+[0m[0m revoke_rules_on_delete = false
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment"                                 = ""
+          [32m+[0m[0m "Managed_by_Terraform"                        = "true"
+          [32m+[0m[0m "Name"                                        = "cyberspeed-assessment-node"
+          [32m+[0m[0m "Owner"                                       = ""
+          [32m+[0m[0m "Project"                                     = ""
+          [32m+[0m[0m "kubernetes.io/cluster/cyberspeed-assessment" = "owned"
+        }
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m vpc_id                 = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.cluster["ingress_nodes_443"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "cluster" {
+      [32m+[0m[0m description              = "Node groups to cluster API"
+      [32m+[0m[0m from_port                = 443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["egress_all"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m cidr_blocks              = [
+          [32m+[0m[0m "0.0.0.0/0",
+        ]
+      [32m+[0m[0m description              = "Allow all egress"
+      [32m+[0m[0m from_port                = 0
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "-1"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 0
+      [32m+[0m[0m type                     = "egress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_443"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node groups"
+      [32m+[0m[0m from_port                = 443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node 4443/tcp webhook"
+      [32m+[0m[0m from_port                = 4443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 4443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node 6443/tcp webhook"
+      [32m+[0m[0m from_port                = 6443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 6443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node 8443/tcp webhook"
+      [32m+[0m[0m from_port                = 8443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 8443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node 9443/tcp webhook"
+      [32m+[0m[0m from_port                = 9443
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 9443
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Cluster API to node kubelets"
+      [32m+[0m[0m from_port                = 10250
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = false
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 10250
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Node to node ingress on ephemeral ports"
+      [32m+[0m[0m from_port                = 1025
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = true
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 65535
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Node to node CoreDNS"
+      [32m+[0m[0m from_port                = 53
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "tcp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = true
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 53
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"][0m will be created
+[0m  [32m+[0m[0m resource "aws_security_group_rule" "node" {
+      [32m+[0m[0m description              = "Node to node CoreDNS UDP"
+      [32m+[0m[0m from_port                = 53
+      [32m+[0m[0m id                       = (known after apply)
+      [32m+[0m[0m prefix_list_ids          = []
+      [32m+[0m[0m protocol                 = "udp"
+      [32m+[0m[0m security_group_id        = (known after apply)
+      [32m+[0m[0m security_group_rule_id   = (known after apply)
+      [32m+[0m[0m self                     = true
+      [32m+[0m[0m source_security_group_id = (known after apply)
+      [32m+[0m[0m to_port                  = 53
+      [32m+[0m[0m type                     = "ingress"
+    }
+
+[1m  # module.eks.module.eks.time_sleep.this[0][0m will be created
+[0m  [32m+[0m[0m resource "time_sleep" "this" {
+      [32m+[0m[0m create_duration = "30s"
+      [32m+[0m[0m id              = (known after apply)
+      [32m+[0m[0m triggers        = {
+          [32m+[0m[0m "cluster_certificate_authority_data" = (known after apply)
+          [32m+[0m[0m "cluster_endpoint"                   = (known after apply)
+          [32m+[0m[0m "cluster_name"                       = "cyberspeed-assessment"
+          [32m+[0m[0m "cluster_service_cidr"               = (known after apply)
+          [32m+[0m[0m "cluster_version"                    = "1.29"
+        }
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_caller_identity.current[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_caller_identity" "current" {
+      [32m+[0m[0m account_id = (known after apply)
+      [32m+[0m[0m arn        = (known after apply)
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m user_id    = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_iam_policy_document.assume_role_policy[0][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_iam_policy_document" "assume_role_policy" {
+      [32m+[0m[0m id   = (known after apply)
+      [32m+[0m[0m json = (known after apply)
+
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions = [
+              [32m+[0m[0m "sts:AssumeRole",
+            ]
+          [32m+[0m[0m sid     = "EKSNodeAssumeRole"
+
+          [32m+[0m[0m principals {
+              [32m+[0m[0m identifiers = [
+                  [32m+[0m[0m "ec2.amazonaws.com",
+                ]
+              [32m+[0m[0m type        = "Service"
+            }
+        }
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_partition.current[0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_partition" "current" {
+      [32m+[0m[0m dns_suffix         = (known after apply)
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m partition          = (known after apply)
+      [32m+[0m[0m reverse_dns_prefix = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_eks_node_group" "this" {
+      [32m+[0m[0m ami_type               = (known after apply)
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m capacity_type          = "ON_DEMAND"
+      [32m+[0m[0m cluster_name           = "cyberspeed-assessment"
+      [32m+[0m[0m disk_size              = (known after apply)
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m instance_types         = [
+          [32m+[0m[0m "t3.large",
+        ]
+      [32m+[0m[0m node_group_name        = (known after apply)
+      [32m+[0m[0m node_group_name_prefix = "eks_t3m_ng-"
+      [32m+[0m[0m node_role_arn          = (known after apply)
+      [32m+[0m[0m release_version        = (known after apply)
+      [32m+[0m[0m resources              = (known after apply)
+      [32m+[0m[0m status                 = (known after apply)
+      [32m+[0m[0m subnet_ids             = (known after apply)
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Name"                 = "eks_t3m_ng"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m version                = "1.29"
+
+      [32m+[0m[0m launch_template {
+          [32m+[0m[0m id      = (known after apply)
+          [32m+[0m[0m name    = (known after apply)
+          [32m+[0m[0m version = (known after apply)
+        }
+
+      [32m+[0m[0m scaling_config {
+          [32m+[0m[0m desired_size = 3
+          [32m+[0m[0m max_size     = 5
+          [32m+[0m[0m min_size     = 1
+        }
+
+      [32m+[0m[0m timeouts {}
+
+      [32m+[0m[0m update_config {
+          [32m+[0m[0m max_unavailable_percentage = 33
+        }
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role" "this" {
+      [32m+[0m[0m arn                   = (known after apply)
+      [32m+[0m[0m assume_role_policy    = (known after apply)
+      [32m+[0m[0m create_date           = (known after apply)
+      [32m+[0m[0m description           = "EKS managed node group IAM role"
+      [32m+[0m[0m force_detach_policies = true
+      [32m+[0m[0m id                    = (known after apply)
+      [32m+[0m[0m managed_policy_arns   = (known after apply)
+      [32m+[0m[0m max_session_duration  = 3600
+      [32m+[0m[0m name                  = (known after apply)
+      [32m+[0m[0m name_prefix           = "eks_t3m_ng-eks-node-group-"
+      [32m+[0m[0m path                  = "/"
+      [32m+[0m[0m tags                  = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all              = (known after apply)
+      [32m+[0m[0m unique_id             = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"][0m will be created
+[0m  [32m+[0m[0m resource "aws_iam_role_policy_attachment" "this" {
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m policy_arn = (known after apply)
+      [32m+[0m[0m role       = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_launch_template.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_launch_template" "this" {
+      [32m+[0m[0m arn                    = (known after apply)
+      [32m+[0m[0m default_version        = (known after apply)
+      [32m+[0m[0m description            = "Custom launch template for eks_t3m_ng EKS managed node group"
+      [32m+[0m[0m id                     = (known after apply)
+      [32m+[0m[0m latest_version         = (known after apply)
+      [32m+[0m[0m name                   = (known after apply)
+      [32m+[0m[0m name_prefix            = "eks_t3m_ng-"
+      [32m+[0m[0m tags                   = {
+          [32m+[0m[0m "Environment"          = ""
+          [32m+[0m[0m "Managed_by_Terraform" = "true"
+          [32m+[0m[0m "Owner"                = ""
+          [32m+[0m[0m "Project"              = ""
+        }
+      [32m+[0m[0m tags_all               = (known after apply)
+      [32m+[0m[0m update_default_version = true
+      [32m+[0m[0m vpc_security_group_ids = (known after apply)
+
+      [32m+[0m[0m metadata_options {
+          [32m+[0m[0m http_endpoint               = "enabled"
+          [32m+[0m[0m http_protocol_ipv6          = (known after apply)
+          [32m+[0m[0m http_put_response_hop_limit = 2
+          [32m+[0m[0m http_tokens                 = "required"
+          [32m+[0m[0m instance_metadata_tags      = (known after apply)
+        }
+
+      [32m+[0m[0m monitoring {
+          [32m+[0m[0m enabled = true
+        }
+
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "instance"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment"          = ""
+              [32m+[0m[0m "Managed_by_Terraform" = "true"
+              [32m+[0m[0m "Name"                 = "eks_t3m_ng"
+              [32m+[0m[0m "Owner"                = ""
+              [32m+[0m[0m "Project"              = ""
+            }
+        }
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "network-interface"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment"          = ""
+              [32m+[0m[0m "Managed_by_Terraform" = "true"
+              [32m+[0m[0m "Name"                 = "eks_t3m_ng"
+              [32m+[0m[0m "Owner"                = ""
+              [32m+[0m[0m "Project"              = ""
+            }
+        }
+      [32m+[0m[0m tag_specifications {
+          [32m+[0m[0m resource_type = "volume"
+          [32m+[0m[0m tags          = {
+              [32m+[0m[0m "Environment"          = ""
+              [32m+[0m[0m "Managed_by_Terraform" = "true"
+              [32m+[0m[0m "Name"                 = "eks_t3m_ng"
+              [32m+[0m[0m "Owner"                = ""
+              [32m+[0m[0m "Project"              = ""
+            }
+        }
+    }
+
+[1m  # module.eks.module.eks.module.kms.data.aws_caller_identity.current[0][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_caller_identity" "current" {
+      [32m+[0m[0m account_id = (known after apply)
+      [32m+[0m[0m arn        = (known after apply)
+      [32m+[0m[0m id         = (known after apply)
+      [32m+[0m[0m user_id    = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.kms.data.aws_iam_policy_document.this[0][0m will be read during apply
+  # (config refers to values not yet known)
+[0m [36m<=[0m[0m data "aws_iam_policy_document" "this" {
+      [32m+[0m[0m id                        = (known after apply)
+      [32m+[0m[0m json                      = (known after apply)
+      [32m+[0m[0m override_policy_documents = []
+      [32m+[0m[0m source_policy_documents   = []
+
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "kms:*",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "*",
+            ]
+          [32m+[0m[0m sid       = "Default"
+
+          [32m+[0m[0m principals {
+              [32m+[0m[0m identifiers = [
+                  [32m+[0m[0m (known after apply),
+                ]
+              [32m+[0m[0m type        = "AWS"
+            }
+        }
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "kms:CancelKeyDeletion",
+              [32m+[0m[0m "kms:Create*",
+              [32m+[0m[0m "kms:Delete*",
+              [32m+[0m[0m "kms:Describe*",
+              [32m+[0m[0m "kms:Disable*",
+              [32m+[0m[0m "kms:Enable*",
+              [32m+[0m[0m "kms:Get*",
+              [32m+[0m[0m "kms:ImportKeyMaterial",
+              [32m+[0m[0m "kms:List*",
+              [32m+[0m[0m "kms:Put*",
+              [32m+[0m[0m "kms:ReplicateKey",
+              [32m+[0m[0m "kms:Revoke*",
+              [32m+[0m[0m "kms:ScheduleKeyDeletion",
+              [32m+[0m[0m "kms:TagResource",
+              [32m+[0m[0m "kms:UntagResource",
+              [32m+[0m[0m "kms:Update*",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "*",
+            ]
+          [32m+[0m[0m sid       = "KeyAdministration"
+
+          [32m+[0m[0m principals {
+              [32m+[0m[0m identifiers = [
+                  [32m+[0m[0m (known after apply),
+                ]
+              [32m+[0m[0m type        = "AWS"
+            }
+        }
+      [32m+[0m[0m statement {
+          [32m+[0m[0m actions   = [
+              [32m+[0m[0m "kms:Decrypt",
+              [32m+[0m[0m "kms:DescribeKey",
+              [32m+[0m[0m "kms:Encrypt",
+              [32m+[0m[0m "kms:GenerateDataKey*",
+              [32m+[0m[0m "kms:ReEncrypt*",
+            ]
+          [32m+[0m[0m resources = [
+              [32m+[0m[0m "*",
+            ]
+          [32m+[0m[0m sid       = "KeyUsage"
+
+          [32m+[0m[0m principals {
+              [32m+[0m[0m identifiers = [
+                  [32m+[0m[0m (known after apply),
+                ]
+              [32m+[0m[0m type        = "AWS"
+            }
+        }
+    }
+
+[1m  # module.eks.module.eks.module.kms.data.aws_partition.current[0][0m will be read during apply
+  # (depends on a resource or a module with changes pending)
+[0m [36m<=[0m[0m data "aws_partition" "current" {
+      [32m+[0m[0m dns_suffix         = (known after apply)
+      [32m+[0m[0m id                 = (known after apply)
+      [32m+[0m[0m partition          = (known after apply)
+      [32m+[0m[0m reverse_dns_prefix = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.kms.aws_kms_alias.this["cluster"][0m will be created
+[0m  [32m+[0m[0m resource "aws_kms_alias" "this" {
+      [32m+[0m[0m arn            = (known after apply)
+      [32m+[0m[0m id             = (known after apply)
+      [32m+[0m[0m name           = "alias/eks/cyberspeed-assessment"
+      [32m+[0m[0m name_prefix    = (known after apply)
+      [32m+[0m[0m target_key_arn = (known after apply)
+      [32m+[0m[0m target_key_id  = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.kms.aws_kms_key.this[0][0m will be created
+[0m  [32m+[0m[0m resource "aws_kms_key" "this" {
+      [32m+[0m[0m arn                                = (known after apply)
+      [32m+[0m[0m bypass_policy_lockout_safety_check = false
+      [32m+[0m[0m customer_master_key_spec           = "SYMMETRIC_DEFAULT"
+      [32m+[0m[0m description                        = "cyberspeed-assessment cluster encryption key"
+      [32m+[0m[0m enable_key_rotation                = true
+      [32m+[0m[0m id                                 = (known after apply)
+      [32m+[0m[0m is_enabled                         = true
+      [32m+[0m[0m key_id                             = (known after apply)
+      [32m+[0m[0m key_usage                          = "ENCRYPT_DECRYPT"
+      [32m+[0m[0m multi_region                       = false
+      [32m+[0m[0m policy                             = (known after apply)
+      [32m+[0m[0m tags                               = {
+          [32m+[0m[0m "Environment"           = ""
+          [32m+[0m[0m "Managed_by_Terraform"  = "true"
+          [32m+[0m[0m "Owner"                 = ""
+          [32m+[0m[0m "Project"               = ""
+          [32m+[0m[0m "terraform-aws-modules" = "eks"
+        }
+      [32m+[0m[0m tags_all                           = (known after apply)
+    }
+
+[1m  # module.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].module.user_data.null_resource.validate_cluster_service_cidr[0m will be created
+[0m  [32m+[0m[0m resource "null_resource" "validate_cluster_service_cidr" {
+      [32m+[0m[0m id = (known after apply)
+    }
+
+[1mPlan:[0m 70 to add, 0 to change, 0 to destroy.
+[0m
+Changes to Outputs:
+  [32m+[0m[0m cluster                            = {
+      [32m+[0m[0m cluster                            = {
+          [32m+[0m[0m access_entries                                   = {
+              [32m+[0m[0m cluster-admin   = {
+                  [32m+[0m[0m access_entry_arn  = (known after apply)
+                  [32m+[0m[0m cluster_name      = "cyberspeed-assessment"
+                  [32m+[0m[0m created_at        = (known after apply)
+                  [32m+[0m[0m id                = (known after apply)
+                  [32m+[0m[0m kubernetes_groups = [
+                      [32m+[0m[0m "cluster-admin",
+                    ]
+                  [32m+[0m[0m modified_at       = (known after apply)
+                  [32m+[0m[0m principal_arn     = (known after apply)
+                  [32m+[0m[0m tags              = {
+                      [32m+[0m[0m Environment          = ""
+                      [32m+[0m[0m Managed_by_Terraform = "true"
+                      [32m+[0m[0m Owner                = ""
+                      [32m+[0m[0m Project              = ""
+                    }
+                  [32m+[0m[0m tags_all          = (known after apply)
+                  [32m+[0m[0m timeouts          = [90mnull[0m[0m
+                  [32m+[0m[0m type              = "STANDARD"
+                  [32m+[0m[0m user_name         = (known after apply)
+                }
+              [32m+[0m[0m cluster_creator = {
+                  [32m+[0m[0m access_entry_arn  = (known after apply)
+                  [32m+[0m[0m cluster_name      = "cyberspeed-assessment"
+                  [32m+[0m[0m created_at        = (known after apply)
+                  [32m+[0m[0m id                = (known after apply)
+                  [32m+[0m[0m kubernetes_groups = (known after apply)
+                  [32m+[0m[0m modified_at       = (known after apply)
+                  [32m+[0m[0m principal_arn     = (known after apply)
+                  [32m+[0m[0m tags              = {
+                      [32m+[0m[0m Environment          = ""
+                      [32m+[0m[0m Managed_by_Terraform = "true"
+                      [32m+[0m[0m Owner                = ""
+                      [32m+[0m[0m Project              = ""
+                    }
+                  [32m+[0m[0m tags_all          = (known after apply)
+                  [32m+[0m[0m timeouts          = [90mnull[0m[0m
+                  [32m+[0m[0m type              = "STANDARD"
+                  [32m+[0m[0m user_name         = (known after apply)
+                }
+            }
+          [32m+[0m[0m access_policy_associations                       = {
+              [32m+[0m[0m cluster_creator_admin = {
+                  [32m+[0m[0m access_scope  = [
+                      [32m+[0m[0m {
+                          [32m+[0m[0m namespaces = [90mnull[0m[0m
+                          [32m+[0m[0m type       = "cluster"
+                        },
+                    ]
+                  [32m+[0m[0m associated_at = (known after apply)
+                  [32m+[0m[0m cluster_name  = "cyberspeed-assessment"
+                  [32m+[0m[0m id            = (known after apply)
+                  [32m+[0m[0m modified_at   = (known after apply)
+                  [32m+[0m[0m policy_arn    = (known after apply)
+                  [32m+[0m[0m principal_arn = (known after apply)
+                  [32m+[0m[0m timeouts      = [90mnull[0m[0m
+                }
+            }
+          [32m+[0m[0m cloudwatch_log_group_arn                         = (known after apply)
+          [32m+[0m[0m cloudwatch_log_group_name                        = "/aws/eks/cyberspeed-assessment/cluster"
+          [32m+[0m[0m cluster_addons                                   = {
+              [32m+[0m[0m coredns    = {
+                  [32m+[0m[0m addon_name                  = "coredns"
+                  [32m+[0m[0m addon_version               = (known after apply)
+                  [32m+[0m[0m arn                         = (known after apply)
+                  [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+                  [32m+[0m[0m configuration_values        = (known after apply)
+                  [32m+[0m[0m created_at                  = (known after apply)
+                  [32m+[0m[0m id                          = (known after apply)
+                  [32m+[0m[0m modified_at                 = (known after apply)
+                  [32m+[0m[0m preserve                    = true
+                  [32m+[0m[0m resolve_conflicts           = [90mnull[0m[0m
+                  [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+                  [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+                  [32m+[0m[0m service_account_role_arn    = [90mnull[0m[0m
+                  [32m+[0m[0m tags                        = {
+                      [32m+[0m[0m Environment          = ""
+                      [32m+[0m[0m Managed_by_Terraform = "true"
+                      [32m+[0m[0m Owner                = ""
+                      [32m+[0m[0m Project              = ""
+                    }
+                  [32m+[0m[0m tags_all                    = (known after apply)
+                  [32m+[0m[0m timeouts                    = {
+                      [32m+[0m[0m create = [90mnull[0m[0m
+                      [32m+[0m[0m delete = [90mnull[0m[0m
+                      [32m+[0m[0m update = [90mnull[0m[0m
+                    }
+                }
+              [32m+[0m[0m kube-proxy = {
+                  [32m+[0m[0m addon_name                  = "kube-proxy"
+                  [32m+[0m[0m addon_version               = (known after apply)
+                  [32m+[0m[0m arn                         = (known after apply)
+                  [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+                  [32m+[0m[0m configuration_values        = (known after apply)
+                  [32m+[0m[0m created_at                  = (known after apply)
+                  [32m+[0m[0m id                          = (known after apply)
+                  [32m+[0m[0m modified_at                 = (known after apply)
+                  [32m+[0m[0m preserve                    = true
+                  [32m+[0m[0m resolve_conflicts           = [90mnull[0m[0m
+                  [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+                  [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+                  [32m+[0m[0m service_account_role_arn    = [90mnull[0m[0m
+                  [32m+[0m[0m tags                        = {
+                      [32m+[0m[0m Environment          = ""
+                      [32m+[0m[0m Managed_by_Terraform = "true"
+                      [32m+[0m[0m Owner                = ""
+                      [32m+[0m[0m Project              = ""
+                    }
+                  [32m+[0m[0m tags_all                    = (known after apply)
+                  [32m+[0m[0m timeouts                    = {
+                      [32m+[0m[0m create = [90mnull[0m[0m
+                      [32m+[0m[0m delete = [90mnull[0m[0m
+                      [32m+[0m[0m update = [90mnull[0m[0m
+                    }
+                }
+              [32m+[0m[0m vpc-cni    = {
+                  [32m+[0m[0m addon_name                  = "vpc-cni"
+                  [32m+[0m[0m addon_version               = (known after apply)
+                  [32m+[0m[0m arn                         = (known after apply)
+                  [32m+[0m[0m cluster_name                = "cyberspeed-assessment"
+                  [32m+[0m[0m configuration_values        = (known after apply)
+                  [32m+[0m[0m created_at                  = (known after apply)
+                  [32m+[0m[0m id                          = (known after apply)
+                  [32m+[0m[0m modified_at                 = (known after apply)
+                  [32m+[0m[0m preserve                    = true
+                  [32m+[0m[0m resolve_conflicts           = [90mnull[0m[0m
+                  [32m+[0m[0m resolve_conflicts_on_create = "OVERWRITE"
+                  [32m+[0m[0m resolve_conflicts_on_update = "OVERWRITE"
+                  [32m+[0m[0m service_account_role_arn    = [90mnull[0m[0m
+                  [32m+[0m[0m tags                        = {
+                      [32m+[0m[0m Environment          = ""
+                      [32m+[0m[0m Managed_by_Terraform = "true"
+                      [32m+[0m[0m Owner                = ""
+                      [32m+[0m[0m Project              = ""
+                    }
+                  [32m+[0m[0m tags_all                    = (known after apply)
+                  [32m+[0m[0m timeouts                    = {
+                      [32m+[0m[0m create = [90mnull[0m[0m
+                      [32m+[0m[0m delete = [90mnull[0m[0m
+                      [32m+[0m[0m update = [90mnull[0m[0m
+                    }
+                }
+            }
+          [32m+[0m[0m cluster_arn                                      = (known after apply)
+          [32m+[0m[0m cluster_certificate_authority_data               = (known after apply)
+          [32m+[0m[0m cluster_endpoint                                 = (known after apply)
+          [32m+[0m[0m cluster_iam_role_arn                             = (known after apply)
+          [32m+[0m[0m cluster_iam_role_name                            = (known after apply)
+          [32m+[0m[0m cluster_iam_role_unique_id                       = (known after apply)
+          [32m+[0m[0m cluster_id                                       = (known after apply)
+          [32m+[0m[0m cluster_identity_providers                       = {}
+          [32m+[0m[0m cluster_ip_family                                = "ipv4"
+          [32m+[0m[0m cluster_name                                     = "cyberspeed-assessment"
+          [32m+[0m[0m cluster_oidc_issuer_url                          = (known after apply)
+          [32m+[0m[0m cluster_platform_version                         = (known after apply)
+          [32m+[0m[0m cluster_primary_security_group_id                = (known after apply)
+          [32m+[0m[0m cluster_security_group_arn                       = (known after apply)
+          [32m+[0m[0m cluster_security_group_id                        = (known after apply)
+          [32m+[0m[0m cluster_service_cidr                             = (known after apply)
+          [32m+[0m[0m cluster_status                                   = (known after apply)
+          [32m+[0m[0m cluster_tls_certificate_sha1_fingerprint         = (known after apply)
+          [32m+[0m[0m cluster_version                                  = "1.29"
+          [32m+[0m[0m eks_managed_node_groups                          = {
+              [32m+[0m[0m eks_t3m_ng = {
+                  [32m+[0m[0m autoscaling_group_schedule_arns    = {}
+                  [32m+[0m[0m iam_role_arn                       = (known after apply)
+                  [32m+[0m[0m iam_role_name                      = (known after apply)
+                  [32m+[0m[0m iam_role_unique_id                 = (known after apply)
+                  [32m+[0m[0m launch_template_arn                = (known after apply)
+                  [32m+[0m[0m launch_template_id                 = (known after apply)
+                  [32m+[0m[0m launch_template_latest_version     = (known after apply)
+                  [32m+[0m[0m launch_template_name               = (known after apply)
+                  [32m+[0m[0m node_group_arn                     = (known after apply)
+                  [32m+[0m[0m node_group_autoscaling_group_names = (known after apply)
+                  [32m+[0m[0m node_group_id                      = (known after apply)
+                  [32m+[0m[0m node_group_labels                  = [90mnull[0m[0m
+                  [32m+[0m[0m node_group_resources               = (known after apply)
+                  [32m+[0m[0m node_group_status                  = (known after apply)
+                  [32m+[0m[0m node_group_taints                  = []
+                  [32m+[0m[0m platform                           = "linux"
+                }
+            }
+          [32m+[0m[0m eks_managed_node_groups_autoscaling_group_names  = (known after apply)
+          [32m+[0m[0m fargate_profiles                                 = {}
+          [32m+[0m[0m kms_key_arn                                      = (known after apply)
+          [32m+[0m[0m kms_key_id                                       = (known after apply)
+          [32m+[0m[0m kms_key_policy                                   = (known after apply)
+          [32m+[0m[0m node_security_group_arn                          = (known after apply)
+          [32m+[0m[0m node_security_group_id                           = (known after apply)
+          [32m+[0m[0m oidc_provider                                    = (known after apply)
+          [32m+[0m[0m oidc_provider_arn                                = (known after apply)
+          [32m+[0m[0m self_managed_node_groups                         = {}
+          [32m+[0m[0m self_managed_node_groups_autoscaling_group_names = []
+        }
+      [32m+[0m[0m cluster_certificate_authority_data = (known after apply)
+      [32m+[0m[0m cluster_endpoint                   = (known after apply)
+      [32m+[0m[0m cluster_id                         = (known after apply)
+      [32m+[0m[0m self_managed_node_groups           = {}
+    }
+  [32m+[0m[0m cluster_certificate_authority_data = (known after apply)
+  [32m+[0m[0m cluster_endpoint                   = (known after apply)
+  [32m+[0m[0m cluster_id                         = (known after apply)
+  [32m+[0m[0m cluster_role                       = (known after apply)
+  [32m+[0m[0m eks_administrator_role             = (known after apply)
+  [32m+[0m[0m lb_controller_policy               = (known after apply)
+  [32m+[0m[0m private_subnet_1a                  = (known after apply)
+  [32m+[0m[0m private_subnet_1b                  = (known after apply)
+  [32m+[0m[0m private_subnet_1c                  = (known after apply)
+  [32m+[0m[0m public_subnet_1a                   = (known after apply)
+  [32m+[0m[0m public_subnet_1b                   = (known after apply)
+  [32m+[0m[0m public_subnet_1c                   = (known after apply)
+  [32m+[0m[0m self_managed_node_groups           = {}
+  [32m+[0m[0m vpc                                = (known after apply)
+[0m[1m
+Do you want to perform these actions?[0m
+  Terraform will perform the actions described above.
+  Only 'yes' will be accepted to approve.
+
+  [1mEnter a value:[0m [0m
+[0m[1mmodule.secrets.aws_ssm_parameter.secret_database: Creating...[0m[0m
+[0m[1mmodule.network.aws_eip.nat: Creating...[0m[0m
+[0m[1mmodule.network.aws_vpc.vpc: Creating...[0m[0m
+[0m[1mmodule.secrets.aws_ssm_parameter.secret_database: Creation complete after 2s [id=/projects/cyberspeed/database/password/master][0m
+[0m[1mmodule.network.aws_eip.nat: Creation complete after 2s [id=eipalloc-064061c6217da8a0e][0m
+[0m[1mmodule.network.aws_vpc.vpc: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.network.aws_vpc.vpc: Creation complete after 15s [id=vpc-09c9740c253a169c2][0m
+[0m[1mmodule.network.aws_internet_gateway.igw: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1c: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1a: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1b: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1b: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1c: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1a: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1b: Creation complete after 2s [id=subnet-0f4f73a3721bb72dd][0m
+[0m[1mmodule.network.aws_internet_gateway.igw: Creation complete after 3s [id=igw-07b1f036cfcdbd45e][0m
+[0m[1mmodule.network.aws_route_table.public: Creating...[0m[0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1c: Creation complete after 3s [id=subnet-0db19b3f926ef0b96][0m
+[0m[1mmodule.network.aws_subnet.private_subnet_1a: Creation complete after 3s [id=subnet-0177946e0e1dbce9a][0m
+[0m[1mmodule.network.aws_route_table.public: Creation complete after 2s [id=rtb-0f0d87a241233c552][0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1a: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1c: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1b: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1c: Creation complete after 13s [id=subnet-09e555354cc6287e7][0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1a: Creation complete after 15s [id=subnet-05edcfa93f865296d][0m
+[0m[1mmodule.network.aws_subnet.public_subnet_1b: Creation complete after 15s [id=subnet-00496c09fd6c42978][0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1a: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1c: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1b: Creating...[0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1b: Creation complete after 1s [id=rtbassoc-0253d959e97e67456][0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1a: Creation complete after 1s [id=rtbassoc-0241208dbc75dd982][0m
+[0m[1mmodule.network.aws_route_table_association.public_subnet_1c: Creation complete after 1s [id=rtbassoc-074f4aef3cb04a05c][0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [40s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [50s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [1m0s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [1m10s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [1m20s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Still creating... [1m30s elapsed][0m[0m
+[0m[1mmodule.network.aws_nat_gateway.nat: Creation complete after 1m38s [id=nat-07a3a95d79690abd9][0m
+[0m[1mmodule.network.aws_route_table.private: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table.private: Creation complete after 3s [id=rtb-037068cc4dd2394d2][0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1c: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1a: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1b: Creating...[0m[0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1b: Creation complete after 2s [id=rtbassoc-0771f43d084b5ced0][0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1a: Creation complete after 2s [id=rtbassoc-0795093c12d52d3e1][0m
+[0m[1mmodule.network.aws_route_table_association.private_subnet_1c: Creation complete after 2s [id=rtbassoc-071e86d3ec4c48be0][0m
+[0m[1mmodule.iam.aws_iam_policy.policy: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role.eks_administrator_access: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role.eks_cluster_role: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_policy.eks_admin_policy: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_policy.eks_admin_policy: Creation complete after 2s [id=arn:aws:iam::851725424717:policy/AmazonEKSAdminPolicy][0m
+[0m[1mmodule.iam.aws_iam_policy.policy: Creation complete after 2s [id=arn:aws:iam::851725424717:policy/cyberspeed-assessment-load-balance-controller][0m
+[0m[1mmodule.iam.aws_iam_role.eks_administrator_access: Creation complete after 3s [id=EKSAdministratorAccess][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_administrator_access_attach: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role.eks_cluster_role: Creation complete after 3s [id=cyberspeed-assessment-cluster-ServiceRole][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonSSMManagedInstanceCore: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSServicePolicy: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_load-balancer-controller: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSClusterPolicy: Creating...[0m[0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_administrator_access_attach: Creation complete after 1s [id=EKSAdministratorAccess-20240326095310222400000004][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSServicePolicy: Creation complete after 1s [id=cyberspeed-assessment-cluster-ServiceRole-20240326095310453500000005][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_load-balancer-controller: Creation complete after 1s [id=cyberspeed-assessment-cluster-ServiceRole-20240326095310460100000006][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonEKSClusterPolicy: Creation complete after 1s [id=cyberspeed-assessment-cluster-ServiceRole-20240326095310484600000007][0m
+[0m[1mmodule.iam.aws_iam_role_policy_attachment.eks_cluster-AmazonSSMManagedInstanceCore: Creation complete after 1s [id=cyberspeed-assessment-cluster-ServiceRole-20240326095310584400000008][0m
+[0m[1mmodule.eks.module.eks.data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_partition.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks.data.aws_partition.current: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group.node[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_cloudwatch_log_group.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2764486067][0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_partition.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_caller_identity.current[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_iam_policy_document.assume_role_policy[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_partition.current[0]: Read complete after 0s [id=aws][0m
+[0m[1mmodule.eks.module.eks.aws_security_group.cluster[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_iam_policy_document.assume_role_policy[0]: Read complete after 0s [id=2560088296][0m
+[0m[1mmodule.eks.module.eks.aws_iam_role.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].data.aws_caller_identity.current: Read complete after 1s [id=851725424717][0m
+[0m[1mmodule.eks.module.eks.data.aws_caller_identity.current: Read complete after 1s [id=851725424717][0m
+[0m[1mmodule.eks.module.eks.data.aws_iam_session_context.current: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_iam_session_context.current: Read complete after 0s [id=arn:aws:iam::851725424717:user/cyberspeed][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role.this[0]: Creation complete after 1s [id=eks_t3m_ng-eks-node-group-2024032609531109940000000c][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_caller_identity.current[0]: Read complete after 1s [id=851725424717][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKSWorkerNodePolicy"]: Creation complete after 1s [id=eks_t3m_ng-eks-node-group-2024032609531109940000000c-2024032609531260960000000d][0m
+[0m[1mmodule.eks.module.eks.aws_iam_role.this[0]: Creation complete after 2s [id=cyberspeed-assessment-cluster-2024032609531109700000000b][0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_iam_policy_document.this[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.data.aws_iam_policy_document.this[0]: Read complete after 0s [id=1899073351][0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_key.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEC2ContainerRegistryReadOnly"]: Creation complete after 1s [id=eks_t3m_ng-eks-node-group-2024032609531109940000000c-2024032609531264140000000e][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_iam_role_policy_attachment.this["AmazonEKS_CNI_Policy"]: Creation complete after 1s [id=eks_t3m_ng-eks-node-group-2024032609531109940000000c-2024032609531264730000000f][0m
+[0m[1mmodule.eks.module.eks.aws_cloudwatch_log_group.this[0]: Creation complete after 2s [id=/aws/eks/cyberspeed-assessment/cluster][0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSClusterPolicy"]: Creation complete after 1s [id=cyberspeed-assessment-cluster-2024032609531109700000000b-20240326095313242300000010][0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.this["AmazonEKSVPCResourceController"]: Creation complete after 1s [id=cyberspeed-assessment-cluster-2024032609531109700000000b-20240326095313256300000011][0m
+[0m[1mmodule.eks.module.eks.aws_security_group.cluster[0]: Creation complete after 4s [id=sg-0a014537866ad3840][0m
+[0m[1mmodule.eks.module.eks.aws_security_group.node[0]: Creation complete after 4s [id=sg-07fc5ff7734a1685c][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["egress_all"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_6443_webhook"]: Creation complete after 1s [id=sgrule-1220841443][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.cluster["ingress_nodes_443"]: Creation complete after 1s [id=sgrule-2550801184][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["egress_all"]: Creation complete after 2s [id=sgrule-2041903842][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_kubelet"]: Creation complete after 3s [id=sgrule-3003934453][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_443"]: Creation complete after 5s [id=sgrule-1181658323][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_9443_webhook"]: Creation complete after 6s [id=sgrule-1060732937][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_udp"]: Creation complete after 7s [id=sgrule-1082591181][0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_key.this[0]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_nodes_ephemeral"]: Creation complete after 11s [id=sgrule-18282244][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_4443_webhook"]: Creation complete after 11s [id=sgrule-2173102197][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_self_coredns_tcp"]: Creation complete after 10s [id=sgrule-3839403042][0m
+[0m[1mmodule.eks.module.eks.aws_security_group_rule.node["ingress_cluster_8443_webhook"]: Creation complete after 12s [id=sgrule-1536734146][0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_key.this[0]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_key.this[0]: Creation complete after 27s [id=a26d7ffc-7ea6-4caf-acf3-70eb12e43f60][0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_alias.this["cluster"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_iam_policy.cluster_encryption[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.kms.aws_kms_alias.this["cluster"]: Creation complete after 1s [id=alias/eks/cyberspeed-assessment][0m
+[0m[1mmodule.eks.module.eks.aws_iam_policy.cluster_encryption[0]: Creation complete after 1s [id=arn:aws:iam::851725424717:policy/cyberspeed-assessment-cluster-ClusterEncryption20240326095340153700000012][0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_iam_role_policy_attachment.cluster_encryption[0]: Creation complete after 1s [id=cyberspeed-assessment-cluster-2024032609531109700000000b-20240326095341430200000013][0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [1m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [2m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [3m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [4m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [5m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [6m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [7m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Still creating... [7m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_cluster.this[0]: Creation complete after 7m15s [id=cyberspeed-assessment][0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["coredns"]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Project"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_entry.this["cluster_creator"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Environment"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Managed_by_Terraform"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Owner"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["kubernetes.io/cluster/cyberspeed-assessment"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.data.tls_certificate.this[0]: Reading...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["coredns"]: Read complete after 1s [id=coredns][0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["vpc-cni"]: Read complete after 1s [id=vpc-cni][0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_entry.this["cluster-admin"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.data.aws_eks_addon_version.this["kube-proxy"]: Read complete after 1s [id=kube-proxy][0m
+[0m[1mmodule.eks.module.eks.time_sleep.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.data.tls_certificate.this[0]: Read complete after 1s [id=d96ba034611af71f2b6c069f217b624cb5f034ea][0m
+[0m[1mmodule.eks.module.eks.aws_iam_openid_connect_provider.oidc_provider[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_entry.this["cluster_creator"]: Creation complete after 1s [id=cyberspeed-assessment:arn:aws:iam::851725424717:user/cyberspeed][0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Environment"]: Creation complete after 2s [id=sg-0b182a10f24edc87a,Environment][0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_entry.this["cluster-admin"]: Creation complete after 1s [id=cyberspeed-assessment:arn:aws:iam::851725424717:role/EKSAdministratorAccess][0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["kubernetes.io/cluster/cyberspeed-assessment"]: Creation complete after 2s [id=sg-0b182a10f24edc87a,kubernetes.io/cluster/cyberspeed-assessment][0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Owner"]: Creation complete after 2s [id=sg-0b182a10f24edc87a,Owner][0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Managed_by_Terraform"]: Creation complete after 2s [id=sg-0b182a10f24edc87a,Managed_by_Terraform][0m
+[0m[1mmodule.eks.module.eks.aws_ec2_tag.cluster_primary_security_group["Project"]: Creation complete after 2s [id=sg-0b182a10f24edc87a,Project][0m
+[0m[1mmodule.eks.module.eks.aws_iam_openid_connect_provider.oidc_provider[0]: Creation complete after 1s [id=arn:aws:iam::851725424717:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/FD296EA4D5A8F7F29C76C1352BBE0ED6][0m
+[0m[1mmodule.eks.module.eks.aws_eks_access_policy_association.this["cluster_creator_admin"]: Creation complete after 1s [id=cyberspeed-assessment#arn:aws:iam::851725424717:user/cyberspeed#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy][0m
+[0m[1mmodule.eks.module.eks.time_sleep.this[0]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.time_sleep.this[0]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.time_sleep.this[0]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.time_sleep.this[0]: Creation complete after 30s [id=2024-03-26T10:01:27Z][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_launch_template.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].module.user_data.null_resource.validate_cluster_service_cidr: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].module.user_data.null_resource.validate_cluster_service_cidr: Creation complete after 0s [id=761002388364058822][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_launch_template.this[0]: Creation complete after 3s [id=lt-0724217b870334bf5][0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m0s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Still creating... [1m50s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.module.eks_managed_node_group["eks_t3m_ng"].aws_eks_node_group.this[0]: Creation complete after 1m52s [id=cyberspeed-assessment:eks_t3m_ng-20240326100132579100000016][0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["kube-proxy"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Creating...[0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["kube-proxy"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Still creating... [10s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["kube-proxy"]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Still creating... [20s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["kube-proxy"]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Still creating... [30s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["kube-proxy"]: Creation complete after 38s [id=cyberspeed-assessment:kube-proxy][0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Still creating... [40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Still creating... [40s elapsed][0m[0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["vpc-cni"]: Creation complete after 43s [id=cyberspeed-assessment:vpc-cni][0m
+[0m[1mmodule.eks.module.eks.aws_eks_addon.this["coredns"]: Creation complete after 48s [id=cyberspeed-assessment:coredns][0m
+[0m[1m[32m
+Apply complete! Resources: 70 added, 0 changed, 0 destroyed.
+[0m[0m[1m[32m
+Outputs:
+
+[0mcluster = {
+  "cluster" = {
+    "access_entries" = {
+      "cluster-admin" = {
+        "access_entry_arn" = "arn:aws:eks:us-east-1:851725424717:access-entry/cyberspeed-assessment/role/851725424717/EKSAdministratorAccess/aec73d1a-5963-c561-83bd-ea81c7e60637"
+        "cluster_name" = "cyberspeed-assessment"
+        "created_at" = "2024-03-26T10:00:58Z"
+        "id" = "cyberspeed-assessment:arn:aws:iam::851725424717:role/EKSAdministratorAccess"
+        "kubernetes_groups" = toset([
+          "cluster-admin",
+        ])
+        "modified_at" = "2024-03-26T10:00:58Z"
+        "principal_arn" = "arn:aws:iam::851725424717:role/EKSAdministratorAccess"
+        "tags" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "tags_all" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "timeouts" = null /* object */
+        "type" = "STANDARD"
+        "user_name" = "arn:aws:sts::851725424717:assumed-role/EKSAdministratorAccess/{{SessionName}}"
+      }
+      "cluster_creator" = {
+        "access_entry_arn" = "arn:aws:eks:us-east-1:851725424717:access-entry/cyberspeed-assessment/user/851725424717/cyberspeed/8cc73d1a-5899-0a56-d177-253306e09b56"
+        "cluster_name" = "cyberspeed-assessment"
+        "created_at" = "2024-03-26T10:00:57Z"
+        "id" = "cyberspeed-assessment:arn:aws:iam::851725424717:user/cyberspeed"
+        "kubernetes_groups" = toset([])
+        "modified_at" = "2024-03-26T10:00:57Z"
+        "principal_arn" = "arn:aws:iam::851725424717:user/cyberspeed"
+        "tags" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "tags_all" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "timeouts" = null /* object */
+        "type" = "STANDARD"
+        "user_name" = "arn:aws:iam::851725424717:user/cyberspeed"
+      }
+    }
+    "access_policy_associations" = {
+      "cluster_creator_admin" = {
+        "access_scope" = tolist([
+          {
+            "namespaces" = toset(null) /* of string */
+            "type" = "cluster"
+          },
+        ])
+        "associated_at" = "2024-03-26 10:00:59.41 +0000 UTC"
+        "cluster_name" = "cyberspeed-assessment"
+        "id" = "cyberspeed-assessment#arn:aws:iam::851725424717:user/cyberspeed#arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+        "modified_at" = "2024-03-26 10:00:59.41 +0000 UTC"
+        "policy_arn" = "arn:aws:eks::aws:cluster-access-policy/AmazonEKSClusterAdminPolicy"
+        "principal_arn" = "arn:aws:iam::851725424717:user/cyberspeed"
+        "timeouts" = null /* object */
+      }
+    }
+    "cloudwatch_log_group_arn" = "arn:aws:logs:us-east-1:851725424717:log-group:/aws/eks/cyberspeed-assessment/cluster"
+    "cloudwatch_log_group_name" = "/aws/eks/cyberspeed-assessment/cluster"
+    "cluster_addons" = {
+      "coredns" = {
+        "addon_name" = "coredns"
+        "addon_version" = "v1.11.1-eksbuild.6"
+        "arn" = "arn:aws:eks:us-east-1:851725424717:addon/cyberspeed-assessment/coredns/68c73d1b-7e1e-f6d5-f800-836269e6575f"
+        "cluster_name" = "cyberspeed-assessment"
+        "configuration_values" = ""
+        "created_at" = "2024-03-26T10:03:27Z"
+        "id" = "cyberspeed-assessment:coredns"
+        "modified_at" = "2024-03-26T10:04:05Z"
+        "preserve" = true
+        "resolve_conflicts" = tostring(null)
+        "resolve_conflicts_on_create" = "OVERWRITE"
+        "resolve_conflicts_on_update" = "OVERWRITE"
+        "service_account_role_arn" = ""
+        "tags" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "tags_all" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "timeouts" = {
+          "create" = tostring(null)
+          "delete" = tostring(null)
+          "update" = tostring(null)
+        }
+      }
+      "kube-proxy" = {
+        "addon_name" = "kube-proxy"
+        "addon_version" = "v1.29.1-eksbuild.2"
+        "arn" = "arn:aws:eks:us-east-1:851725424717:addon/cyberspeed-assessment/kube-proxy/86c73d1b-7e1e-49f9-6661-61fe138aaa0b"
+        "cluster_name" = "cyberspeed-assessment"
+        "configuration_values" = ""
+        "created_at" = "2024-03-26T10:03:27Z"
+        "id" = "cyberspeed-assessment:kube-proxy"
+        "modified_at" = "2024-03-26T10:04:01Z"
+        "preserve" = true
+        "resolve_conflicts" = tostring(null)
+        "resolve_conflicts_on_create" = "OVERWRITE"
+        "resolve_conflicts_on_update" = "OVERWRITE"
+        "service_account_role_arn" = ""
+        "tags" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "tags_all" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "timeouts" = {
+          "create" = tostring(null)
+          "delete" = tostring(null)
+          "update" = tostring(null)
+        }
+      }
+      "vpc-cni" = {
+        "addon_name" = "vpc-cni"
+        "addon_version" = "v1.17.1-eksbuild.1"
+        "arn" = "arn:aws:eks:us-east-1:851725424717:addon/cyberspeed-assessment/vpc-cni/1ec73d1b-7e1b-af35-f2eb-2e491d4afbac"
+        "cluster_name" = "cyberspeed-assessment"
+        "configuration_values" = ""
+        "created_at" = "2024-03-26T10:03:27Z"
+        "id" = "cyberspeed-assessment:vpc-cni"
+        "modified_at" = "2024-03-26T10:04:01Z"
+        "preserve" = true
+        "resolve_conflicts" = tostring(null)
+        "resolve_conflicts_on_create" = "OVERWRITE"
+        "resolve_conflicts_on_update" = "OVERWRITE"
+        "service_account_role_arn" = ""
+        "tags" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "tags_all" = tomap({
+          "Environment" = ""
+          "Managed_by_Terraform" = "true"
+          "Owner" = ""
+          "Project" = ""
+        })
+        "timeouts" = {
+          "create" = tostring(null)
+          "delete" = tostring(null)
+          "update" = tostring(null)
+        }
+      }
+    }
+    "cluster_arn" = "arn:aws:eks:us-east-1:851725424717:cluster/cyberspeed-assessment"
+    "cluster_certificate_authority_data" = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJTHRGU3gzcHBCbW93RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qWXdPVFV5TXpkYUZ3MHpOREF6TWpRd09UVTNNemRhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUMxZ1BNU1UwaEFveUQzcjl3NkpkSGVUakNDZHhmZnNrcUl0aFhkOFNNWXNvYVRIWGNZczlNREZsU08KaGNmWnRlWldUYWlFaTlTS0EwNVZCdHp6NWNXVFNkZytTdDlUMVVobUt6aUYxNWtYYW44MkZ0VFYySThHbXd4OAp1NldGQml1bmlTaENXMCtOT2FmYTVuUmtabkx4Tm8wQ0syMzhnUytRaVljUzQ5UVlqMjJiZXJweHRqT080ZG9FCnJrOXR3dTIzYXpzOWtjUE5XWnNDUEhaUFJ2WVJVM1YzUi9naTduc001M2pPZ1R3dFhQcWZiM3Fna2RyMUlBWkgKeWRGb2NlTnFqSmFkVHR0b2lrMGovK0tCOGYxMFh2ejBPbExZc1pzdDJBMlhOMlRjQVNkUUJqeWFHTXFjelhPLwpsazU2dnE5emxmMDQxTVdDQTlyaHdrVDBsbkl6QWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUYWVuUGFkU0ZDWHRSWEhzZVBxcnJrUmlKeVN6QVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQnNha2cxNCtmQwpGejBJSnBtMzRza3VuaTVBWVVYYnNRWFgvTUF5T2RQWDZPUnErSVpoRnYrT3p4eDdRWVpWd3ZkcndWZzR2S1NxCmRkQlJCZlViVkpXTHNMQTdPOG5zK0V5cjN0YzZkQ1IrcVVSNndiTUtPVytzN2RsRVIxWTZyRUthWHhycVNZdHQKbncvR0dIcU8ydmxTUHZ6YWlZVzhSQmxLaDZlOXVsNVlQWlduSElEZFZ4dzFnMWMvdHhHc0RDSktoOXI5UGNKaQpRd0IreUFPam1tMTYvYk1QQmhHa0V0bnROdHRtQWZSQXluYkowM0FsZysxR3FyUWM4LzlZdU45WU9PQ3dFYnFPCnJrR05GWVNMRE1yK3ZPais5NWRzTmJCQlpacWJ4UFRYUmcvbS9WaXJ1emk0OWNJaWpRcjc3enlNQVhoMlNRbmUKMnBORG0wVDhFaUhXCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+    "cluster_endpoint" = "https://FD296EA4D5A8F7F29C76C1352BBE0ED6.gr7.us-east-1.eks.amazonaws.com"
+    "cluster_iam_role_arn" = "arn:aws:iam::851725424717:role/cyberspeed-assessment-cluster-2024032609531109700000000b"
+    "cluster_iam_role_name" = "cyberspeed-assessment-cluster-2024032609531109700000000b"
+    "cluster_iam_role_unique_id" = "AROA4MTWKTBGYJGPBWNN3"
+    "cluster_id" = tostring(null)
+    "cluster_identity_providers" = {}
+    "cluster_ip_family" = "ipv4"
+    "cluster_name" = "cyberspeed-assessment"
+    "cluster_oidc_issuer_url" = "https://oidc.eks.us-east-1.amazonaws.com/id/FD296EA4D5A8F7F29C76C1352BBE0ED6"
+    "cluster_platform_version" = "eks.4"
+    "cluster_primary_security_group_id" = "sg-0b182a10f24edc87a"
+    "cluster_security_group_arn" = "arn:aws:ec2:us-east-1:851725424717:security-group/sg-0a014537866ad3840"
+    "cluster_security_group_id" = "sg-0a014537866ad3840"
+    "cluster_service_cidr" = "172.20.0.0/16"
+    "cluster_status" = "ACTIVE"
+    "cluster_tls_certificate_sha1_fingerprint" = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280"
+    "cluster_version" = "1.29"
+    "eks_managed_node_groups" = {
+      "eks_t3m_ng" = {
+        "autoscaling_group_schedule_arns" = {}
+        "iam_role_arn" = "arn:aws:iam::851725424717:role/eks_t3m_ng-eks-node-group-2024032609531109940000000c"
+        "iam_role_name" = "eks_t3m_ng-eks-node-group-2024032609531109940000000c"
+        "iam_role_unique_id" = "AROA4MTWKTBGTQVIVY6GQ"
+        "launch_template_arn" = "arn:aws:ec2:us-east-1:851725424717:launch-template/lt-0724217b870334bf5"
+        "launch_template_id" = "lt-0724217b870334bf5"
+        "launch_template_latest_version" = 1
+        "launch_template_name" = "eks_t3m_ng-20240326100130247400000014"
+        "node_group_arn" = "arn:aws:eks:us-east-1:851725424717:nodegroup/cyberspeed-assessment/eks_t3m_ng-20240326100132579100000016/b8c73d1a-9dd8-19b7-b971-e32579e24bda"
+        "node_group_autoscaling_group_names" = [
+          "eks-eks_t3m_ng-20240326100132579100000016-b8c73d1a-9dd8-19b7-b971-e32579e24bda",
+        ]
+        "node_group_id" = "cyberspeed-assessment:eks_t3m_ng-20240326100132579100000016"
+        "node_group_labels" = tomap(null) /* of string */
+        "node_group_resources" = tolist([
+          {
+            "autoscaling_groups" = tolist([
+              {
+                "name" = "eks-eks_t3m_ng-20240326100132579100000016-b8c73d1a-9dd8-19b7-b971-e32579e24bda"
+              },
+            ])
+            "remote_access_security_group_id" = ""
+          },
+        ])
+        "node_group_status" = "ACTIVE"
+        "node_group_taints" = toset([])
+        "platform" = "linux"
+      }
+    }
+    "eks_managed_node_groups_autoscaling_group_names" = tolist([
+      "eks-eks_t3m_ng-20240326100132579100000016-b8c73d1a-9dd8-19b7-b971-e32579e24bda",
+    ])
+    "fargate_profiles" = {}
+    "kms_key_arn" = "arn:aws:kms:us-east-1:851725424717:key/a26d7ffc-7ea6-4caf-acf3-70eb12e43f60"
+    "kms_key_id" = "a26d7ffc-7ea6-4caf-acf3-70eb12e43f60"
+    "kms_key_policy" = "{\"Statement\":[{\"Action\":\"kms:*\",\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::851725424717:root\"},\"Resource\":\"*\",\"Sid\":\"Default\"},{\"Action\":[\"kms:Update*\",\"kms:UntagResource\",\"kms:TagResource\",\"kms:ScheduleKeyDeletion\",\"kms:Revoke*\",\"kms:ReplicateKey\",\"kms:Put*\",\"kms:List*\",\"kms:ImportKeyMaterial\",\"kms:Get*\",\"kms:Enable*\",\"kms:Disable*\",\"kms:Describe*\",\"kms:Delete*\",\"kms:Create*\",\"kms:CancelKeyDeletion\"],\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::851725424717:user/cyberspeed\"},\"Resource\":\"*\",\"Sid\":\"KeyAdministration\"},{\"Action\":[\"kms:ReEncrypt*\",\"kms:GenerateDataKey*\",\"kms:Encrypt\",\"kms:DescribeKey\",\"kms:Decrypt\"],\"Effect\":\"Allow\",\"Principal\":{\"AWS\":\"arn:aws:iam::851725424717:role/cyberspeed-assessment-cluster-2024032609531109700000000b\"},\"Resource\":\"*\",\"Sid\":\"KeyUsage\"}],\"Version\":\"2012-10-17\"}"
+    "node_security_group_arn" = "arn:aws:ec2:us-east-1:851725424717:security-group/sg-07fc5ff7734a1685c"
+    "node_security_group_id" = "sg-07fc5ff7734a1685c"
+    "oidc_provider" = "oidc.eks.us-east-1.amazonaws.com/id/FD296EA4D5A8F7F29C76C1352BBE0ED6"
+    "oidc_provider_arn" = "arn:aws:iam::851725424717:oidc-provider/oidc.eks.us-east-1.amazonaws.com/id/FD296EA4D5A8F7F29C76C1352BBE0ED6"
+    "self_managed_node_groups" = {}
+    "self_managed_node_groups_autoscaling_group_names" = tolist([])
+  }
+  "cluster_certificate_authority_data" = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJTHRGU3gzcHBCbW93RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qWXdPVFV5TXpkYUZ3MHpOREF6TWpRd09UVTNNemRhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUMxZ1BNU1UwaEFveUQzcjl3NkpkSGVUakNDZHhmZnNrcUl0aFhkOFNNWXNvYVRIWGNZczlNREZsU08KaGNmWnRlWldUYWlFaTlTS0EwNVZCdHp6NWNXVFNkZytTdDlUMVVobUt6aUYxNWtYYW44MkZ0VFYySThHbXd4OAp1NldGQml1bmlTaENXMCtOT2FmYTVuUmtabkx4Tm8wQ0syMzhnUytRaVljUzQ5UVlqMjJiZXJweHRqT080ZG9FCnJrOXR3dTIzYXpzOWtjUE5XWnNDUEhaUFJ2WVJVM1YzUi9naTduc001M2pPZ1R3dFhQcWZiM3Fna2RyMUlBWkgKeWRGb2NlTnFqSmFkVHR0b2lrMGovK0tCOGYxMFh2ejBPbExZc1pzdDJBMlhOMlRjQVNkUUJqeWFHTXFjelhPLwpsazU2dnE5emxmMDQxTVdDQTlyaHdrVDBsbkl6QWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUYWVuUGFkU0ZDWHRSWEhzZVBxcnJrUmlKeVN6QVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQnNha2cxNCtmQwpGejBJSnBtMzRza3VuaTVBWVVYYnNRWFgvTUF5T2RQWDZPUnErSVpoRnYrT3p4eDdRWVpWd3ZkcndWZzR2S1NxCmRkQlJCZlViVkpXTHNMQTdPOG5zK0V5cjN0YzZkQ1IrcVVSNndiTUtPVytzN2RsRVIxWTZyRUthWHhycVNZdHQKbncvR0dIcU8ydmxTUHZ6YWlZVzhSQmxLaDZlOXVsNVlQWlduSElEZFZ4dzFnMWMvdHhHc0RDSktoOXI5UGNKaQpRd0IreUFPam1tMTYvYk1QQmhHa0V0bnROdHRtQWZSQXluYkowM0FsZysxR3FyUWM4LzlZdU45WU9PQ3dFYnFPCnJrR05GWVNMRE1yK3ZPais5NWRzTmJCQlpacWJ4UFRYUmcvbS9WaXJ1emk0OWNJaWpRcjc3enlNQVhoMlNRbmUKMnBORG0wVDhFaUhXCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+  "cluster_endpoint" = "https://FD296EA4D5A8F7F29C76C1352BBE0ED6.gr7.us-east-1.eks.amazonaws.com"
+  "cluster_id" = tostring(null)
+  "self_managed_node_groups" = {}
+}
+cluster_certificate_authority_data = "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURCVENDQWUyZ0F3SUJBZ0lJTHRGU3gzcHBCbW93RFFZSktvWklodmNOQVFFTEJRQXdGVEVUTUJFR0ExVUUKQXhNS2EzVmlaWEp1WlhSbGN6QWVGdzB5TkRBek1qWXdPVFV5TXpkYUZ3MHpOREF6TWpRd09UVTNNemRhTUJVeApFekFSQmdOVkJBTVRDbXQxWW1WeWJtVjBaWE13Z2dFaU1BMEdDU3FHU0liM0RRRUJBUVVBQTRJQkR3QXdnZ0VLCkFvSUJBUUMxZ1BNU1UwaEFveUQzcjl3NkpkSGVUakNDZHhmZnNrcUl0aFhkOFNNWXNvYVRIWGNZczlNREZsU08KaGNmWnRlWldUYWlFaTlTS0EwNVZCdHp6NWNXVFNkZytTdDlUMVVobUt6aUYxNWtYYW44MkZ0VFYySThHbXd4OAp1NldGQml1bmlTaENXMCtOT2FmYTVuUmtabkx4Tm8wQ0syMzhnUytRaVljUzQ5UVlqMjJiZXJweHRqT080ZG9FCnJrOXR3dTIzYXpzOWtjUE5XWnNDUEhaUFJ2WVJVM1YzUi9naTduc001M2pPZ1R3dFhQcWZiM3Fna2RyMUlBWkgKeWRGb2NlTnFqSmFkVHR0b2lrMGovK0tCOGYxMFh2ejBPbExZc1pzdDJBMlhOMlRjQVNkUUJqeWFHTXFjelhPLwpsazU2dnE5emxmMDQxTVdDQTlyaHdrVDBsbkl6QWdNQkFBR2pXVEJYTUE0R0ExVWREd0VCL3dRRUF3SUNwREFQCkJnTlZIUk1CQWY4RUJUQURBUUgvTUIwR0ExVWREZ1FXQkJUYWVuUGFkU0ZDWHRSWEhzZVBxcnJrUmlKeVN6QVYKQmdOVkhSRUVEakFNZ2dwcmRXSmxjbTVsZEdWek1BMEdDU3FHU0liM0RRRUJDd1VBQTRJQkFRQnNha2cxNCtmQwpGejBJSnBtMzRza3VuaTVBWVVYYnNRWFgvTUF5T2RQWDZPUnErSVpoRnYrT3p4eDdRWVpWd3ZkcndWZzR2S1NxCmRkQlJCZlViVkpXTHNMQTdPOG5zK0V5cjN0YzZkQ1IrcVVSNndiTUtPVytzN2RsRVIxWTZyRUthWHhycVNZdHQKbncvR0dIcU8ydmxTUHZ6YWlZVzhSQmxLaDZlOXVsNVlQWlduSElEZFZ4dzFnMWMvdHhHc0RDSktoOXI5UGNKaQpRd0IreUFPam1tMTYvYk1QQmhHa0V0bnROdHRtQWZSQXluYkowM0FsZysxR3FyUWM4LzlZdU45WU9PQ3dFYnFPCnJrR05GWVNMRE1yK3ZPais5NWRzTmJCQlpacWJ4UFRYUmcvbS9WaXJ1emk0OWNJaWpRcjc3enlNQVhoMlNRbmUKMnBORG0wVDhFaUhXCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K"
+cluster_endpoint = "https://FD296EA4D5A8F7F29C76C1352BBE0ED6.gr7.us-east-1.eks.amazonaws.com"
+cluster_role = "arn:aws:iam::851725424717:role/cyberspeed-assessment-cluster-ServiceRole"
+eks_administrator_role = "arn:aws:iam::851725424717:role/EKSAdministratorAccess"
+lb_controller_policy = "arn:aws:iam::851725424717:policy/cyberspeed-assessment-load-balance-controller"
+private_subnet_1a = "subnet-0177946e0e1dbce9a"
+private_subnet_1b = "subnet-0f4f73a3721bb72dd"
+private_subnet_1c = "subnet-0db19b3f926ef0b96"
+public_subnet_1a = "subnet-05edcfa93f865296d"
+public_subnet_1b = "subnet-00496c09fd6c42978"
+public_subnet_1c = "subnet-09e555354cc6287e7"
+self_managed_node_groups = {}
+vpc = "vpc-09c9740c253a169c2"

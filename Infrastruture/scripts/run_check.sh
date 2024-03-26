@@ -7,11 +7,11 @@ cd Infrastruture/
 echo "Starting running initial_stack..."
 echo
 echo "Initializing Terraform..."
-terraform init
+terraform init | tee init-output.txt
 echo
 
 echo "Executing terraform plan..."
-terraform plan
+terraform plan | tee plan-output.txt
 echo
 
 # Go back to the root directory

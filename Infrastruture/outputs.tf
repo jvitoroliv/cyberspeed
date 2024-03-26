@@ -37,7 +37,7 @@ output "lb_controller_policy" {
 }
 
 output "eks_administrator_role" {
-  value = module.iam.eks_administrator_role.arn
+  value = module.iam.eks_administrator_role
 }
 
 

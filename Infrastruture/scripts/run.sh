@@ -15,7 +15,7 @@ terraform plan
 echo
 
 echo "Applying changes with terraform apply..."
-terraform apply -auto-approve
+terraform apply -auto-approve | tee apply-output.txt
 echo
 
 # Go back to the root directory

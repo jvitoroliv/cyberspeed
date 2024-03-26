@@ -37,16 +37,16 @@ module "eks" {
   eks_managed_ng-capacity_type             = var.eks_managed_ng-capacity_type
   enable_cluster_creator_admin_permissions = var.enable_cluster_creator_admin_permissions
   access_entries_eks_admin                 = var.access_entries_eks_admin
-  eks_admin_policy = module.iam.eks_admin_policy
+  eks_administrator_role                   = module.iam.eks_administrator_role
   tags                                     = var.tags
 
   depends_on = [module.network, module.iam]
 }
 
-module "secrets"{
+module "secrets" {
   source = "./modules/secrets"
-  
-  ssm_secret_database_name = var.ssm_secret_database_name
-  tags = var.tags
 
-  }
+  ssm_secret_database_name = var.ssm_secret_database_name
+  tags                     = var.tags
+
+}
