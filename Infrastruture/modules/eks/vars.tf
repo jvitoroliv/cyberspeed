@@ -70,6 +70,9 @@ variable "access_entries_eks_admin" {
   type = string
 }
 
+variable "eks_administrator_role" {
+  type = string
+}
 variable "tags" {
   type = map(string)
 }
