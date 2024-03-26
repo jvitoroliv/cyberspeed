@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: wordpress
+  name: wordpress
+spec:
+  containers:
+  - image: 851725424717.dkr.ecr.us-east-1.amazonaws.com/cyberspeed-project:wordpress
+    name: wordpress
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}

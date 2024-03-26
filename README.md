@@ -27,10 +27,6 @@ Ensure that you have configured your AWS CLI with the appropriate credentials an
     git clone [repository-url]
     ```
 
-3. **Variables Review**: It is essential to review the variables defined in the variables file. Ensure they align with your infrastructure requirements. Adjust the configurations in the `locals` block which is reserved for `aws_auth` configuration post stack deployment.
-
-   - **Adjustments**: Some changes are mandatory, such as resource names, while others are optional, like the number of nodes, and the scaling parameters (maximum, minimum, and desired configurations).
-
 ### Running the Terraform Script
 
 1. **Plannig the EKS Cluster Stack**: Execute the following script to plan the network resources, EKS-related roles and policies, Secrets storage in SSM Parameter Store and the EKS cluster and check if is everything okay with the stack creation:
@@ -56,10 +52,61 @@ aws eks --region [AWS_REGION] update-kubeconfig --name [EKS_CLUSTER_NAME]
 
 Replace [AWS_REGION] with your AWS region and [EKS_CLUSTER_NAME] with the name of your EKS cluster.
 
+Installing the AWS EBS CSI Driver to be able to create a PVC
+
+  aws iam create-policy \
+    --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
+    --policy-document file://ebs-csi-driver-policy.json
+
+  aws iam attach-role-policy \
+    --role-name eks_t3m_ng-eks-node-group-2024032609531109940000000c \
+    --policy-arn arn:aws:iam::851725424717:policy/AmazonEKS_EBS_CSI_Driver_Policy
+
+  eksctl utils associate-iam-oidc-provider --region [AWS_REGION] --cluster [EKS_CLUSTER_NAME] --approve
+
+  eksctl create iamserviceaccount \
+    --cluster [EKS_CLUSTER_NAME] \
+    --namespace kube-system \
+    --name ebs-csi-controller-sa \
+    --attach-policy-arn [AmazonEKS_EBS_CSI_Driver_Policy.ARN] \
+    --override-existing-serviceaccounts \
+    --region [AWS_REGION] \
+    --approve
+
+  helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver/
+
+  helm repo update
+
+  helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
+    --namespace kube-system \
+    --set enableVolumeScheduling=true \
+    --set enableVolumeResizing=true \
+    --set enableVolumeSnapshot=true \
+    --set serviceAccount.controller.create=false \
+    --set serviceAccount.controller.name=ebs-csi-controller-sa
+
+  kubectl annotate serviceaccount ebs-csi-controller-sa \
+    -n kube-system eks.amazonaws.com/role-arn=arn:aws:iam::851725424717:role/eks_t3m_ng-eks-node-group-2024032609531109940000000c
+
 Deploying Kubernetes Manifests
 Deployment: Run the deploy.sh script to apply all the Kubernetes manifests:
 
-./Kubernetes/deploy.sh
+kubectl create ns $NAMESPACE
+
+kubectl config set-context --current --namespace=$NAMESPACE
+
+#For MySQL Creation
+CD /Kubernetes/Manifests/MySQL
+
+export DB_PASSWORD=$(aws ssm get-parameter --name /projects/cyberspeed/database/password/master --with-decryption --query Parameter.Value --output text)
+
+kubectl create secret generic mysql-secret --from-literal=root-password="${DB_PASSWORD}"
+
+kubectl apply -f mysql-pvc.yaml
+
+kubectl apply -f mysql-deployment.yaml
+
+
 
 Now, your EKS cluster should be operational, and you can begin deploying applications to it.
 
@@ -71,3 +118,4 @@ Make sure to replace `[repository-url]`, `[AWS_REGION]`, and `[EKS_CLUSTER_NAME]
 
 
 
+export DB_PASSWORD=$(aws ssm get-parameter --name /projects/cyberspeed/database/password/master --with-decryption --query Parameter.Value --output text)

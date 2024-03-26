@@ -1,11 +1,3 @@
-locals {
-  aws_auth_role     = "arn:aws:iam::{AWS::ACCOUNT::ID}:role/{ROLE_EKSAdministratorAccess}"
-  aws_auth_username = "EKSAdminUsers"
-  aws_account_id    = data.aws_caller_identity.current.account_id
-  user_arn          = "arn:aws:iam::{AWS::ACCOUNT::ID}:user/{USER}"
-  user_name         = "{USER_NAME}"
-}
-
 data "aws_caller_identity" "current" {}
 
 ###### Shared vars ######
