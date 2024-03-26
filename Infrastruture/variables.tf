@@ -31,20 +31,6 @@ variable "cidr_block" {
   default = "10.1"
 }
 
-###### Node vars ######
-variable "node_instances_type" {
-  default = "t3.medium"
-}
-variable "scaling_config_max_size" {
-  default = 5
-}
-variable "scaling_config_min_size" {
-  default = 1
-}
-variable "scaling_config_desired_size" {
-  default = 3
-}
-
 ###### EKS vars ######
 variable "cluster_name" {
   type    = string
@@ -108,7 +94,7 @@ variable "eks_managed_ng-instace_types" {
 
 variable "eks_managed_ng-capacity_type" {
   type    = string
-  default = "SPOT"
+  default = "ON_DEMAND"
 }
 
 variable "enable_cluster_creator_admin_permissions" {
@@ -119,4 +105,10 @@ variable "enable_cluster_creator_admin_permissions" {
 variable "access_entries_eks_admin" {
   type    = string
   default = "cluster-admin"
+}
+
+###### SSM Parameters vars ######
+variable "ssm_secret_database_name" {
+  type = string
+  default = "/projects/cyberspeed/database/password/master"
 }

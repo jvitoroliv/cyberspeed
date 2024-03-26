@@ -1,3 +1,21 @@
+module "network" {
+  source = "./modules/network"
+
+  aws_region   = var.aws_region
+  vpc_name     = var.vpc_name
+  cidr_block   = var.cidr_block
+  cluster_name = var.cluster_name
+}
+
+module "iam" {
+  source = "./modules/iam"
+
+  vpc_id       = module.network.vpc.id
+  cluster_name = var.cluster_name
+
+  depends_on = [module.network]
+}
+
 module "eks" {
   source = "./modules/eks"
 
@@ -19,7 +37,16 @@ module "eks" {
   eks_managed_ng-capacity_type             = var.eks_managed_ng-capacity_type
   enable_cluster_creator_admin_permissions = var.enable_cluster_creator_admin_permissions
   access_entries_eks_admin                 = var.access_entries_eks_admin
+  eks_admin_policy = module.iam.eks_admin_policy
   tags                                     = var.tags
 
   depends_on = [module.network, module.iam]
 }
+
+module "secrets"{
+  source = "./modules/secrets"
+  
+  ssm_secret_database_name = var.ssm_secret_database_name
+  tags = var.tags
+
+  }

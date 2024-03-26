@@ -31,21 +31,21 @@ Ensure that you have configured your AWS CLI with the appropriate credentials an
 
    - **Adjustments**: Some changes are mandatory, such as resource names, while others are optional, like the number of nodes, and the scaling parameters (maximum, minimum, and desired configurations).
 
-### Running the Terraform Scripts
+### Running the Terraform Script
 
-1. **Network and Roles**: Execute the following script to create the network resources and EKS-related roles and policies:
-
-    ```sh
-    ./Infrastructure/scripts/run_initial.sh
-    ```
-
-2. **Creating the EKS Cluster**: After the initial script execution, run the second script to deploy the EKS cluster:
+1. **Plannig the EKS Cluster Stack**: Execute the following script to plan the network resources, EKS-related roles and policies, Secrets storage in SSM Parameter Store and the EKS cluster and check if is everything okay with the stack creation:
 
     ```sh
-    ./Infrastructure/scripts/run_eks.sh
+    ./Infrastructure/scripts/run_check.sh
     ```
 
-   Note that the creation process might take some time.
+2. **Creating the EKS Cluster Stack**: Execute the following script to create the network resources, EKS-related roles and policies, Secrets storage in SSM Parameter Store and deploy the EKS cluster:
+
+    ```sh
+    ./Infrastructure/scripts/run.sh
+    ```
+
+   Note: that the creation process might take some time.
 
 ### Configuring kubectl
 
@@ -57,11 +57,10 @@ aws eks --region [AWS_REGION] update-kubeconfig --name [EKS_CLUSTER_NAME]
 Replace [AWS_REGION] with your AWS region and [EKS_CLUSTER_NAME] with the name of your EKS cluster.
 
 Deploying Kubernetes Manifests
-Deployment: Navigate to the ./Kubernetes directory and run the deploy.sh script to apply all the Kubernetes manifests:
-sh
-Copy code
-cd ./Kubernetes
-./deploy.sh
+Deployment: Run the deploy.sh script to apply all the Kubernetes manifests:
+
+./Kubernetes/deploy.sh
+
 Now, your EKS cluster should be operational, and you can begin deploying applications to it.
 
 Support

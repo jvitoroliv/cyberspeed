@@ -14,9 +14,5 @@ echo "Executing terraform plan..."
 terraform plan
 echo
 
-echo "Applying changes with terraform apply..."
-terraform apply -auto-approve
-echo
-
 # Go back to the root directory
 cd ..

@@ -48,16 +48,6 @@ module "eks" {
     "${var.access_entries_eks_admin}" = {
       kubernetes_groups = ["cluster-admin"]
       principal_arn     = "arn:aws:iam::851725424717:role/EKSAdministratorAccess"
-
-      policy_associations = {
-        example = {
-          policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-          access_scope = {
-            namespaces = ["default"]
-            type       = "namespace"
-          }
-        }
-      }
     }
   }
 

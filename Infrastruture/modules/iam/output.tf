@@ -7,5 +7,5 @@ output "lb_controller_policy" {
 }
 
 output "eks_administrator_role" {
-  value = aws_iam_role.eks_administrator_access
+  value = aws_iam_role.eks_administrator_access.arn
 }
