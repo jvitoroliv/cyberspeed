@@ -7,9 +7,17 @@ metadata:
   name: wordpress
 spec:
   containers:
-  - image: 851725424717.dkr.ecr.us-east-1.amazonaws.com/cyberspeed-project:wordpress
+  - image: wordpress:6.4-apache
     name: wordpress
-    resources: {}
+    ports:
+    - containerPort: 80
+      protocol: TCP
+    resources:
+      requests:
+        cpu: "250m"
+        memory: "256Mi"
+      limits:
+        cpu: "500m"
+        memory: "512Mi"
   dnsPolicy: ClusterFirst
   restartPolicy: Always
-status: {}

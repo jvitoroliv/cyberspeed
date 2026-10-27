@@ -1,7 +1,7 @@
 #!/bin/bash
 
-#Waranty that will execute terraform commands in the correct directory
-cd Infrastruture/
+# Ensure terraform commands execute in the correct directory
+cd Infrastructure/
 
 # Run Terraform to create the complete stack
 echo "Starting running initial_stack..."
@@ -15,7 +15,7 @@ terraform plan
 echo
 
 echo "Applying changes with terraform apply..."
-terraform apply -auto-approve | tee apply-output.txt
+terraform apply -auto-approve
 echo
 
 # Go back to the root directory

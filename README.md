@@ -1,121 +1,182 @@
-# AWS Terraform EKS Stack Guide
+# EKS Infrastructure Stack — DevSecOps Assessment
 
-## Overview
+> **Technical Assessment:** This repository contains my solution to a DevSecOps coding assessment. The challenge required designing and implementing a scalable, containerized web application stack using Infrastructure as Code, Kubernetes orchestration, secrets management, and CI/CD pipeline considerations — delivered within a 4-day timeframe.
 
-This repository contains a foundational model for a Terraform stack that provisions cloud infrastructure on AWS, specifically designed for the creation of an Amazon Elastic Kubernetes Service (EKS) cluster. The stack is equipped with all necessary dependencies for immediate use upon deployment.
+## Architecture Overview
+
+The solution provisions a production-grade Amazon EKS cluster on AWS using Terraform, with a modular infrastructure design:
+
+```
+├── Infrastructure/
+│   ├── main.tf              # Root module — orchestrates all child modules
+│   ├── providers.tf         # AWS, Kubernetes, and Helm provider configuration
+│   ├── variables.tf         # Input variables with sensible defaults
+│   ├── versions.tf          # Provider version constraints and S3 backend
+│   ├── outputs.tf           # Exported values from all modules
+│   ├── modules/
+│   │   ├── network/         # VPC, subnets (3 public + 3 private), NAT, IGW, routing
+│   │   ├── iam/             # EKS cluster role, ALB controller policy, admin access
+│   │   ├── eks/             # EKS cluster with managed node groups (terraform-aws-modules/eks v20.8.3)
+│   │   └── secrets/         # SSM Parameter Store for database credentials
+│   └── scripts/
+│       ├── run.sh           # Full init + plan + apply
+│       └── run_check.sh     # Dry-run validation (init + plan only)
+├── Kubernetes/
+│   └── Manifests/
+│       ├── Wordpress/       # WordPress pod, service, and Helm chart metadata
+│       ├── Database/        # MySQL 5.7 pod
+│       └── EBS_CSI/         # EBS CSI driver IAM policy for persistent volumes
+└── .github/
+    └── workflows/
+        └── main.yml         # CI/CD pipeline — validate on PR, plan on merge
+```
+
+## Tech Stack
+
+| Component | Technology |
+|---|---|
+| Infrastructure as Code | Terraform >= 0.13.1 |
+| Cloud Provider | AWS (us-east-1) |
+| Container Orchestration | Amazon EKS 1.29 |
+| EKS Module | terraform-aws-modules/eks/aws v20.8.3 |
+| Node Groups | Managed — t3.large (ON_DEMAND), min 1 / max 5 / desired 3 |
+| Networking | Custom VPC with 3 AZs, public + private subnets, NAT Gateway |
+| Secrets Management | AWS SSM Parameter Store |
+| Load Balancing | AWS ALB (IAM policy for controller included) |
+| CI/CD | GitHub Actions (Terraform validate + plan) |
+| Web Application | WordPress 6.4 (containerized) |
+| Database | MySQL 5.7 (containerized) |
+| Storage | EBS CSI Driver for Kubernetes PersistentVolumes |
 
 ## Prerequisites
 
-Before using the code in this repository, you will need to have the following installed:
-
-- Terraform
-- AWS CLI
-- kubectl
+- [Terraform](https://www.terraform.io/downloads) >= 0.13.1
+- [AWS CLI](https://aws.amazon.com/cli/) configured with appropriate credentials
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)
+- [Helm](https://helm.sh/docs/intro/install/) (for EBS CSI driver installation)
 - Git
 
-Ensure that you have configured your AWS CLI with the appropriate credentials and default region to interact with your AWS account.
+## Usage
 
-## Usage Instructions
+### 1. Configure the Backend
 
-### Initial Setup
+Update `Infrastructure/versions.tf` with your S3 bucket for remote state:
 
-1. **Pre-Stack Creation**: The initial step involves setting up network configurations, roles, and policies which Terraform will utilize to create the EKS cluster and configure Kubernetes.
+```hcl
+backend "s3" {
+  bucket = "<YOUR_S3_BUCKET>"
+  key    = "cyberspeed/project-v2/tfstate"
+  region = "us-east-1"
+}
+```
 
-2. **Cloning the Repository**: Start by cloning this repository to your local machine using:
-
-    ```sh
-    git clone [repository-url]
-    ```
-
-### Running the Terraform Script
-
-1. **Plannig the EKS Cluster Stack**: Execute the following script to plan the network resources, EKS-related roles and policies, Secrets storage in SSM Parameter Store and the EKS cluster and check if is everything okay with the stack creation:
-
-    ```sh
-    ./Infrastructure/scripts/run_check.sh
-    ```
-
-2. **Creating the EKS Cluster Stack**: Execute the following script to create the network resources, EKS-related roles and policies, Secrets storage in SSM Parameter Store and deploy the EKS cluster:
-
-    ```sh
-    ./Infrastructure/scripts/run.sh
-    ```
-
-   Note: that the creation process might take some time.
-
-### Configuring kubectl
-
-After the Terraform stack has been successfully created, set up `kubectl` to interact with your new EKS cluster by running:
+### 2. Validate the Stack (Dry Run)
 
 ```sh
-aws eks --region [AWS_REGION] update-kubeconfig --name [EKS_CLUSTER_NAME]
+./Infrastructure/scripts/run_check.sh
+```
 
-Replace [AWS_REGION] with your AWS region and [EKS_CLUSTER_NAME] with the name of your EKS cluster.
+### 3. Deploy the Infrastructure
 
-Installing the AWS EBS CSI Driver to be able to create a PVC
+```sh
+./Infrastructure/scripts/run.sh
+```
 
-  aws iam create-policy \
-    --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
-    --policy-document file://ebs-csi-driver-policy.json
+> Note: EKS cluster creation takes approximately 10-15 minutes.
 
-  aws iam attach-role-policy \
-    --role-name eks_t3m_ng-eks-node-group-2024032609531109940000000c \
-    --policy-arn arn:aws:iam::851725424717:policy/AmazonEKS_EBS_CSI_Driver_Policy
+### 4. Configure kubectl
 
-  eksctl utils associate-iam-oidc-provider --region [AWS_REGION] --cluster [EKS_CLUSTER_NAME] --approve
+```sh
+aws eks --region <AWS_REGION> update-kubeconfig --name <EKS_CLUSTER_NAME>
+```
 
-  eksctl create iamserviceaccount \
-    --cluster [EKS_CLUSTER_NAME] \
-    --namespace kube-system \
-    --name ebs-csi-controller-sa \
-    --attach-policy-arn [AmazonEKS_EBS_CSI_Driver_Policy.ARN] \
-    --override-existing-serviceaccounts \
-    --region [AWS_REGION] \
-    --approve
+### 5. Install the EBS CSI Driver
 
-  helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver/
+```sh
+# Create the IAM policy
+aws iam create-policy \
+  --policy-name AmazonEKS_EBS_CSI_Driver_Policy \
+  --policy-document file://Kubernetes/Manifests/EBS_CSI/ebs-csi-driver-policy.json
 
-  helm repo update
+# Attach the policy to the node group role
+aws iam attach-role-policy \
+  --role-name <NODE_GROUP_ROLE_NAME> \
+  --policy-arn arn:aws:iam::<AWS_ACCOUNT_ID>:policy/AmazonEKS_EBS_CSI_Driver_Policy
 
-  helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
-    --namespace kube-system \
-    --set enableVolumeScheduling=true \
-    --set enableVolumeResizing=true \
-    --set enableVolumeSnapshot=true \
-    --set serviceAccount.controller.create=false \
-    --set serviceAccount.controller.name=ebs-csi-controller-sa
+# Associate OIDC provider
+eksctl utils associate-iam-oidc-provider \
+  --region <AWS_REGION> --cluster <EKS_CLUSTER_NAME> --approve
 
-  kubectl annotate serviceaccount ebs-csi-controller-sa \
-    -n kube-system eks.amazonaws.com/role-arn=arn:aws:iam::851725424717:role/eks_t3m_ng-eks-node-group-2024032609531109940000000c
+# Create IAM service account for the CSI controller
+eksctl create iamserviceaccount \
+  --cluster <EKS_CLUSTER_NAME> \
+  --namespace kube-system \
+  --name ebs-csi-controller-sa \
+  --attach-policy-arn <EBS_CSI_DRIVER_POLICY_ARN> \
+  --override-existing-serviceaccounts \
+  --region <AWS_REGION> \
+  --approve
 
-Deploying Kubernetes Manifests
-Deployment: Run the deploy.sh script to apply all the Kubernetes manifests:
+# Install the EBS CSI driver via Helm
+helm repo add aws-ebs-csi-driver https://kubernetes-sigs.github.io/aws-ebs-csi-driver/
+helm repo update
+helm install aws-ebs-csi-driver aws-ebs-csi-driver/aws-ebs-csi-driver \
+  --namespace kube-system \
+  --set enableVolumeScheduling=true \
+  --set enableVolumeResizing=true \
+  --set enableVolumeSnapshot=true \
+  --set serviceAccount.controller.create=false \
+  --set serviceAccount.controller.name=ebs-csi-controller-sa
+```
 
-kubectl create ns $NAMESPACE
+### 6. Deploy the Application
 
-kubectl config set-context --current --namespace=$NAMESPACE
+```sh
+# Create namespace
+kubectl create ns cyberspeed
 
-#For MySQL Creation
-CD /Kubernetes/Manifests/MySQL
+# Set namespace context
+kubectl config set-context --current --namespace=cyberspeed
 
-export DB_PASSWORD=$(aws ssm get-parameter --name /projects/cyberspeed/database/password/master --with-decryption --query Parameter.Value --output text)
-
+# Create database secret from SSM Parameter Store
+export DB_PASSWORD=$(aws ssm get-parameter \
+  --name /projects/cyberspeed/database/password/master \
+  --with-decryption --query Parameter.Value --output text)
 kubectl create secret generic mysql-secret --from-literal=root-password="${DB_PASSWORD}"
 
-kubectl apply -f mysql-pvc.yaml
+# Deploy MySQL
+kubectl apply -f Kubernetes/Manifests/Database/mysql.yml
 
-kubectl apply -f mysql-deployment.yaml
+# Deploy WordPress
+kubectl apply -f Kubernetes/Manifests/Wordpress/wordpress.yml
+kubectl apply -f Kubernetes/Manifests/Wordpress/service.yml
+```
 
+## Architecture Decisions
 
+- **Modular Terraform structure:** Each infrastructure concern (networking, IAM, EKS, secrets) is isolated in its own module with well-defined inputs and outputs. This supports independent testing, reusability, and clear separation of concerns.
 
-Now, your EKS cluster should be operational, and you can begin deploying applications to it.
+- **3-AZ deployment:** Both public and private subnets span three availability zones, providing high availability for the EKS control plane and worker nodes.
 
-Support
+- **Private worker nodes:** Worker nodes are deployed in private subnets with internet access via NAT Gateway, following AWS security best practices for EKS.
 
-For support and further assistance, please reach out to the repository maintainers or consult the AWS and Terraform documentation.
+- **SSM Parameter Store for secrets:** Database credentials are stored in AWS SSM Parameter Store rather than hardcoded, with SecureString encryption at rest. Kubernetes secrets are created at deployment time from SSM values.
 
-Make sure to replace `[repository-url]`, `[AWS_REGION]`, and `[EKS_CLUSTER_NAME]` with the actual values that correspond to your setup.
+- **EBS CSI Driver:** Included to support persistent storage for stateful workloads (MySQL), ensuring data durability across pod restarts.
 
+- **CI/CD scaffold:** GitHub Actions workflow validates Terraform formatting and configuration on PRs, with a plan step for infrastructure change review before merge.
 
+## Assessment Requirements Covered
 
-export DB_PASSWORD=$(aws ssm get-parameter --name /projects/cyberspeed/database/password/master --with-decryption --query Parameter.Value --output text)
+| Requirement | Implementation |
+|---|---|
+| Version control | Git with GitHub |
+| Container orchestration | Amazon EKS with managed node groups |
+| Cloud infrastructure provisioning | Terraform with modular AWS resources |
+| Scalability | EKS auto-scaling (min 1 / max 5 nodes) |
+| Security (DevSecOps) | Private subnets, IAM least-privilege, SSM secrets, no hardcoded credentials |
+| Containerization best practices | Public container images, resource limits, health configuration |
+| Networking | Custom VPC, public/private subnet separation, NAT Gateway, ALB controller |
+| IaC principles | Terraform modules, remote state, variable-driven configuration |
+| Secrets management | AWS SSM Parameter Store with SecureString |
+| CI/CD (bonus) | GitHub Actions workflow for validation and planning |

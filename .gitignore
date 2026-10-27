@@ -1,7 +1,29 @@
-#ignore sensitive information in the version control
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfplan
+.terraform.lock.hcl
+crash.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform output logs
+*-output.txt
+
+# Sensitive files
 *.env
 *.pem
-*.terraform.lock.hcl
-*.tfstate
-*.tfstate.backup
-.terraform/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
